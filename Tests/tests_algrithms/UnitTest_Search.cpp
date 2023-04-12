@@ -1,12 +1,14 @@
-#include "pch.h"
+
 #include "CppUnitTest.h"
-#include "C:\Users\user\source\repos\ConsoleApplication3\ConsoleApplication3\ConsoleApplication3.cpp"
+#include "../../EducationLibs/Algorithms/search.cpp"
+
+#include <vector>
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
-namespace UnitTest1
+namespace UnitTest_Search
 {
-	TEST_CLASS(UnitTest1)
+	TEST_CLASS(UnitTest_Search)
 	{
 	public:
 

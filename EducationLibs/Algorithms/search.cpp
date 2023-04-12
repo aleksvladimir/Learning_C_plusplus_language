@@ -1,5 +1,4 @@
 ﻿
-#include <iostream>
 #include <vector>
 
 constexpr auto NOT_FOUND = -1;
