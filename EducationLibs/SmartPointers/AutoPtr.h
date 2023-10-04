@@ -10,7 +10,7 @@ public:
   AutoPtr( AutoPtr& other ) noexcept : BaseStrongPtr( other.release() ) {}
   AutoPtr& operator = ( AutoPtr& other ) noexcept
   {
-    myPtr_ = other.release();
+    reset( other.release() );
     return *this;
   }
   ~AutoPtr()
