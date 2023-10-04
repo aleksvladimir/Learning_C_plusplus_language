@@ -3,24 +3,17 @@
 template<class T>
 class BaseStrongPtr
 {
-protected:
-  T * myPtr_ = nullptr;
-
 public:
-
-  // default_ctr
-  BaseStrongPtr( T * ptr = nullptr ) : myPtr_( ptr ) {}
-
-  // get
-  T * get()
+  BaseStrongPtr( T* ptr = nullptr ) : myPtr_( ptr ) {}
+  T* get() const noexcept
   {
     return myPtr_;
   }
-
-  // *
-  T & operator * ()
+  T& operator*() const noexcept
   {
     return *get();
   }
 
+protected:
+  T* myPtr_ = nullptr;
 };

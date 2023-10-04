@@ -6,38 +6,24 @@ class AutoPtr : public BaseStrongPtr<T>
 {
 public:
 
-  // default_ctr
-  AutoPtr( T * ptr = nullptr ) : BaseStrongPtr( ptr ) {}
-
-  // copy_ctr
-  AutoPtr( AutoPtr<T> & autoPtr )
+  explicit AutoPtr( T* ptr = nullptr ) noexcept : BaseStrongPtr( ptr ) {}
+  AutoPtr( AutoPtr& other ) noexcept : BaseStrongPtr( other.release() ) {}
+  AutoPtr& operator = ( AutoPtr& other ) noexcept
   {
-    myPtr_ = autoPtr.release();
-  }
-
-  // copy_operator
-  AutoPtr<T> & operator = ( AutoPtr<T> & right )
-  {
-    myPtr_ = right.release();
+    myPtr_ = other.release();
     return *this;
   }
-
-  // dtr
   ~AutoPtr()
   {
     delete myPtr_;
   }
-
-  // release
-  T * release()
+  T* release() noexcept
   {
     auto tmp = myPtr_;
     myPtr_ = nullptr;
     return tmp;
   }
-
-  // reset
-  void reset( T * ptr = nullptr )
+  void reset( T* ptr = nullptr ) noexcept
   {
     if ( ptr != myPtr_ )
       delete myPtr_;

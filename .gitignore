@@ -21,3 +21,4 @@
 *.user
 /Tests/tests_smart_pointers/Debug
 /x64/Debug
+*.filters

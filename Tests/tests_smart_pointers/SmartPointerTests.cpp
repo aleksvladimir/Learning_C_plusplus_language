@@ -84,6 +84,16 @@ namespace SmartPointerTests
 		TEST_METHOD(Test_MyAutoPtr)
 		{
 			allocCounter = 0;
+			{
+				//copy_operator
+				AutoPtr<int> a_ptr1( new int );
+				AutoPtr<int> a_ptr2( new int );
+				Assert::IsTrue( allocCounter == 2 );
+				a_ptr2 = a_ptr1;
+				Assert::IsTrue( allocCounter == 1 );
+				Assert::IsNull( a_ptr1.get() );
+				Assert::IsNotNull( a_ptr2.get() );
+			}
 		  {
 		    //default_ctr
 		    AutoPtr<int> a_ptr( new int );
