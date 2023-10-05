@@ -1,48 +1,33 @@
 #pragma once
 #include "BaseStrongPtr.h"
+#include "HelperClass\Uncopyable.h"
 
 template<class T>
-class UniquePtr : public BaseStrongPtr<T>
+class UniquePtr : public BaseStrongPtr<T>, Uncopyable
 {
 public:
 
-  // default_ctr
-  UniquePtr( T * ptr = nullptr ) : BaseStrongPtr( ptr ) {}
-
-  // copy_ctr
-  UniquePtr( const UniquePtr & ptr ) = delete;
-
-  // copy_operator
-  UniquePtr & operator = ( UniquePtr & ptr ) = delete;
-
-  // move_ctr
+  explicit UniquePtr( T * ptr = nullptr ) : BaseStrongPtr( ptr ) {}
   UniquePtr( UniquePtr && ptr )
   {
     myPtr_ = ptr.release();
   }
-
-  // move_operator
   UniquePtr & operator = ( UniquePtr && ptr )
   {
-    myPtr_ = ptr.release();
+    reset( ptr.release() );
     return *this;
   }
-
-  // dtr
   ~UniquePtr()
   {
     delete myPtr_;
   }
 
-  // release
   T * release()
   {
     auto tmp = myPtr_;
     myPtr_ = nullptr;
     return tmp;
   }
-
-  // reset
   void reset( T * ptr = nullptr )
   {
     if ( ptr != myPtr_ )

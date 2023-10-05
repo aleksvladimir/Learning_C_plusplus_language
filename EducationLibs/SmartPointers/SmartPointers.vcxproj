@@ -148,6 +148,7 @@
   <ItemGroup>
     <ClInclude Include="AutoPtr.h" />
     <ClInclude Include="BaseStrongPtr.h" />
+    <ClInclude Include="HelperClass\Uncopyable.h" />
     <ClInclude Include="MySmartPointersWithRefCount\IRefCount.h" />
     <ClInclude Include="MySmartPointersWithRefCount\RefCount.h" />
     <ClInclude Include="MySmartPointersWithRefCount\RefCountPointer.h" />

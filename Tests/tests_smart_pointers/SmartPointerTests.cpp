@@ -140,6 +140,15 @@ namespace SmartPointerTests
 		TEST_METHOD( Test_std_unique_ptr )
 		{
 			allocCounter = 0;
+			{
+				// move_operator
+				std::unique_ptr<int> p1( new int );
+				std::unique_ptr<int> p2( new int );
+				p2 = std::move( p1 );
+				Assert::IsNull( p1.get() );
+			}
+			Assert::IsTrue( allocCounter == 0 );
+
 		  {
 		    // default_ctr
 			  std::unique_ptr<int> a_ptr0;
@@ -185,6 +194,15 @@ namespace SmartPointerTests
 		TEST_METHOD( Test_MyUniquePtr )
 		{
 			allocCounter = 0;
+			{
+				// move_operator
+				UniquePtr<int> p1( new int );
+				UniquePtr<int> p2( new int );
+				p2 = std::move( p1 );
+				Assert::IsNull( p1.get() );
+			}
+			Assert::IsTrue( allocCounter == 0 );
+
 		  {
 		    // default_ctr
 		    UniquePtr<int> a_ptr0;
@@ -195,7 +213,7 @@ namespace SmartPointerTests
 		    // move_ctr + get
 		    auto a_ptr2( std::move( a_ptr1 ) );
 		    Assert::IsNull( a_ptr1.get() );
-		    //auto a_ptr2( a_ptr1 );	// compile error! copy_ctr is deleted!
+		    //auto a_ptr3( a_ptr1 );	// compile error! copy_ctr is deleted!
 
 		    // *
 		    *a_ptr2 = 2;
