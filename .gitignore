@@ -22,3 +22,5 @@
 /Tests/tests_smart_pointers/Debug
 /x64/Debug
 *.filters
+/EducationLibs/Containers/Debug
+/Tests/tests_containers/Debug
