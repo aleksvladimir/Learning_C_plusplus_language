@@ -1,21 +1,34 @@
 ﻿#pragma once
+#include <memory>
 #include <stdexcept>
+#include <algorithm>
 
 template<typename T>
 class Vector
 {
-  T * buf_ = nullptr;
-  size_t size_ = 0;
-  size_t capacity_ = 0;
+  T* data_ = nullptr;   // elements buffer
+  size_t size_ = 0;     // current elements count
+  size_t capacity_ = 0; // how many elements can fit
 public:
-
+  
+  // 1,2,3 <- 4
   void push_back( const T& elem )
   {
-    
+    const auto hasAvailableQuantity = capacity_ > size_;
+    if ( !hasAvailableQuantity )
+    {
+      capacity_ = std::max( 1u, capacity_ * 2 );
+      auto p = new T[ capacity_ ];
+      std::copy( data_, data_ + size_, p );
+      delete[] data_;
+      data_ = p;
+    }
+    size_++;
+    data_[ size_ - 1 ] = elem;
   }
   void push_back( T && elem )
   {
-
+    push_back( elem );
   }
   void pop_back()
   {
@@ -32,13 +45,13 @@ public:
   T& at( size_t i ) 
   {
     if ( i < size() )
-      return buf_[ i ];
+      return data_[ i ];
     throw std::out_of_range("");
   }
   const T & at( size_t i ) const
   {
     if ( i < size() )
-      return buf_[ i ];
+      return data_[ i ];
     throw std::out_of_range();
   }
   bool empty() const noexcept

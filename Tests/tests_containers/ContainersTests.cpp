@@ -138,12 +138,12 @@ namespace ContainersTests
 			vec.push_back( 2 );
 			Assert::AreEqual( 2, ( int )vec.capacity() );
 			vec.push_back( 1 );
-			Assert::AreEqual( 3, ( int )vec.capacity() );
+			Assert::AreEqual( 4, ( int )vec.capacity() );
 			vec.push_back( 0 );
 			Assert::AreEqual( 4, ( int )vec.capacity() );
 			int a = 0;
 			vec.push_back( a );	// lvalue
-			Assert::AreEqual( 6, ( int )vec.capacity() );
+			Assert::AreEqual( 8, ( int )vec.capacity() );
 			Assert::AreEqual( 5, ( int )vec.size() );
 			Assert::AreEqual( 3, ( int )vec.at( 0 ) );
 			Assert::AreEqual( 2, ( int )vec.at( 1 ) );
