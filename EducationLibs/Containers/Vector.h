@@ -9,30 +9,51 @@ class Vector
   T* data_ = nullptr;   // elements buffer
   size_t size_ = 0;     // current elements count
   size_t capacity_ = 0; // how many elements can fit
+
+  T* alloc( size_t newSize )
+  {
+    return newSize ? new T[ newSize ] : nullptr;
+  }
+  T* realloc()
+  {
+    auto p = alloc( capacity_ );
+    for ( int i = 0; i < size_; ++i )
+      p[ i ] = std::forward<T>( data_[ i ] );
+    delete[] data_;
+    return p;
+  }
+
 public:
-  
-  // 1,2,3 <- 4
-  void push_back( const T& elem )
+
+  Vector() = default;
+  Vector( size_t newSize )
+  {
+    data_ = alloc( capacity_ = size_ = newSize );
+    std::fill( data_, data_ + size_, 0 );     // or memcpy
+  }
+  Vector( size_t newSize, T value )
+  {
+    data_ = alloc( capacity_ = size_ = newSize );
+    std::fill( data_, data_ + size_, value ); // or memcpy
+  }
+
+  template<class U>
+  void push_back( U && elem )
   {
     const auto hasAvailableQuantity = capacity_ > size_;
     if ( !hasAvailableQuantity )
     {
       capacity_ = std::max( 1u, capacity_ * 2 );
-      auto p = new T[ capacity_ ];
-      std::copy( data_, data_ + size_, p );
-      delete[] data_;
-      data_ = p;
+      data_ = realloc();
     }
     size_++;
-    data_[ size_ - 1 ] = elem;
-  }
-  void push_back( T && elem )
-  {
-    push_back( elem );
+    data_[ size_ - 1 ] = std::forward<U>( elem );
   }
   void pop_back()
   {
-    
+    if ( size_ != 0 )
+      data_[ size_ - 1 ].~T();
+    size_--;
   }
   size_t capacity() const noexcept
   {
@@ -44,38 +65,52 @@ public:
   }
   T& at( size_t i ) 
   {
-    if ( i < size() )
+    if ( i < size_ )
       return data_[ i ];
     throw std::out_of_range("");
   }
   const T & at( size_t i ) const
   {
-    if ( i < size() )
+    if ( i < size_ )
       return data_[ i ];
     throw std::out_of_range();
   }
   bool empty() const noexcept
   {
-    return size() == 0;
+    return size_ == 0;
   }
   void reserve( size_t newCapacity ) noexcept
   {
-    capacity_ = newCapacity;
+    if ( newCapacity > capacity_ )
+    {
+      capacity_ = std::max( newCapacity, capacity_ );
+      data_ = realloc();
+    }
   }
   void clear()
   {
-    
+    for ( int i = 0; i < size_; ++i )
+      data_[ i ].~T();
+    size_ = 0;
   }
   void shrink_to_fit()
   {
+    capacity_ = size_;
+    data_ = realloc();
     
   }
-  void resize( size_t newSize ) noexcept
+  void resize( size_t newSize, const T & val = T() ) noexcept
   {
-    size_ = newSize;
-  }
-  void resize( size_t newSize, const T & val ) noexcept
-  {
-    size_ = newSize;
+    if ( newSize == size_ )
+      return;
+    while ( newSize < size_ )
+      pop_back();
+    if ( newSize > size_ )
+    {
+      if ( newSize >= capacity_ )
+        reserve( newSize );
+      while ( newSize > size_ )
+        push_back( val );
+    }
   }
 };
