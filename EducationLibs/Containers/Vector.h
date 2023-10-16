@@ -46,14 +46,15 @@ public:
       capacity_ = std::max( 1u, capacity_ * 2 );
       data_ = realloc();
     }
-    size_++;
-    data_[ size_ - 1 ] = std::forward<U>( elem );
+    data_[ ++size_ - 1 ] = std::forward<U>( elem );
   }
   void pop_back()
   {
     if ( size_ != 0 )
+    {
       data_[ size_ - 1 ].~T();
-    size_--;
+      size_--;      
+    }
   }
   size_t capacity() const noexcept
   {

@@ -209,6 +209,7 @@ namespace ContainersTests
 			  vec.pop_back();
 			  Assert::AreEqual( 1, ( int )vec.size() );
 			  vec.pop_back();
+				vec.pop_back();
 			  Assert::AreEqual( 0, ( int )vec.size() );
 			  Assert::AreEqual( 4, ( int )vec.capacity() );
 			  Assert::IsTrue( vec.empty() );
