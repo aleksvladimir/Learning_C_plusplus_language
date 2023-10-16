@@ -110,13 +110,11 @@ public:
   }
   void resize( size_t newSize, const T & val = T() ) noexcept
   {
-    if ( newSize == size_ )
-      return;
     while ( newSize < size_ )
       pop_back();
     if ( newSize > size_ )
     {
-      if ( newSize >= capacity_ )
+      if ( newSize > capacity_ )
         reserve( newSize );
       while ( newSize > size_ )
         push_back( val );
