@@ -46,7 +46,7 @@ public:
       capacity_ = std::max( 1u, capacity_ * 2 );
       data_ = realloc();
     }
-    data_[ ++size_ - 1 ] = std::forward<U>( elem );
+    data_[ size_++ ] = std::forward<U>( elem );
   }
   void pop_back()
   {
@@ -63,6 +63,14 @@ public:
   size_t size() const noexcept
   {
     return size_;
+  }
+  T& operator [] ( size_t i ) noexcept
+  {
+    return data_[ i ];
+  }
+  const T & operator [] ( size_t i ) const noexcept
+  {
+    return data_[ i ];
   }
   T& at( size_t i ) 
   {

@@ -308,6 +308,18 @@ namespace ContainersTests
 				Assert::AreEqual( 77, ( int )vec.at( 5 ) );
 				Assert::AreEqual( 77, ( int )vec.at( 6 ) );
 		  }
+			// []
+			{
+				Vector<int> vec( 3 );
+				vec.push_back( 4 );
+				Assert::AreEqual( 6, ( int )vec.capacity() );
+				vec.push_back( 6 );
+				Assert::AreEqual( 4, ( int )vec[ 3 ] );
+				Assert::AreEqual( 6, ( int )vec[ 4 ] );
+				const Vector<int> const_vec( 5 );
+				auto& elem = const_vec[ 4 ];
+				//elem = 3;	// error: const elem
+			}
 		}
 
 		TEST_METHOD( Test_std_list )
