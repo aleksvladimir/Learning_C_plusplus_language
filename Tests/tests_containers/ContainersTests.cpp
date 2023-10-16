@@ -161,6 +161,55 @@ namespace ContainersTests
 				Assert::AreEqual( 77, ( int )vec.at( 5 ) );
 				Assert::AreEqual( 77, ( int )vec.at( 6 ) );
 			}
+
+			// default constructor
+			{
+				std::vector<int> vec(3);
+				Assert::AreEqual( 3, ( int )vec.size() );
+				Assert::AreEqual( 3, ( int )vec.capacity() );
+			}
+
+			// []
+			{
+				std::vector<int> vec( 3 );
+				vec.push_back( 4 );
+				Assert::AreEqual( 4, ( int )vec.capacity() );
+				vec.push_back( 6 );
+				Assert::AreEqual( 6, ( int )vec.capacity() );
+				Assert::AreEqual( 4, ( int )vec[ 3 ] );
+				Assert::AreEqual( 6, ( int )vec[ 4 ] );
+				const std::vector<int> const_vec( 5 );
+				auto & elem = const_vec[ 4 ];
+				//elem = 3;	// error: const elem
+			}
+			{
+				std::vector<int> vec;
+				vec.push_back( 1 );
+				Assert::AreEqual( 1, ( int )vec.capacity() );
+				vec.push_back( 1 );
+				Assert::AreEqual( 2, ( int )vec.capacity() );
+				vec.push_back( 1 );
+				Assert::AreEqual( 3, ( int )vec.capacity() );
+				vec.push_back( 1 );
+				Assert::AreEqual( 4, ( int )vec.capacity() );
+				vec.push_back( 1 );
+				Assert::AreEqual( 6, ( int )vec.capacity() );
+				vec.push_back( 1 );
+				Assert::AreEqual( 6, ( int )vec.capacity() );
+				vec.push_back( 1 );
+				Assert::AreEqual( 9, ( int )vec.capacity() );
+				vec.push_back( 1 );
+				vec.push_back( 1 );
+				Assert::AreEqual( 9, ( int )vec.capacity() );
+				vec.push_back( 1 );
+				Assert::AreEqual( 13, ( int )vec.capacity() );
+				vec.push_back( 1 );
+				vec.push_back( 1 );
+				vec.push_back( 1 );
+				Assert::AreEqual( 13, ( int )vec.capacity() );
+				vec.push_back( 1 );
+				Assert::AreEqual( 19, ( int )vec.capacity() );
+			}
 		}
 
 		TEST_METHOD( Test_MyVector)
@@ -201,6 +250,8 @@ namespace ContainersTests
 			// empty
 			{
 				Vector<int> vec(4);
+				Assert::AreEqual( 4, ( int )vec.size() );
+				Assert::AreEqual( 4, ( int )vec.capacity() );
 			  Assert::IsTrue( !vec.empty() );
 			  vec.pop_back();
 			  Assert::AreEqual( 3, ( int )vec.size() );
