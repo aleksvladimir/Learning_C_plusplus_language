@@ -14,13 +14,13 @@ class Vector
   {
     return newSize ? new T[ newSize ] : nullptr;
   }
-  T* realloc()
+  void realloc()
   {
     auto p = alloc( capacity_ );
     for ( int i = 0; i < size_; ++i )
       p[ i ] = std::forward<T>( data_[ i ] );
     delete[] data_;
-    return p;
+    data_ = p;
   }
 
 public:
@@ -44,7 +44,7 @@ public:
     if ( !hasAvailableQuantity )
     {
       capacity_ = std::max( 1u, capacity_ * 2 );
-      data_ = realloc();
+      realloc();
     }
     data_[ size_++ ] = std::forward<U>( elem );
   }
@@ -92,8 +92,8 @@ public:
   {
     if ( newCapacity > capacity_ )
     {
-      capacity_ = std::max( newCapacity, capacity_ );
-      data_ = realloc();
+      capacity_ = newCapacity;
+      realloc();
     }
   }
   void clear()
@@ -105,8 +105,7 @@ public:
   void shrink_to_fit()
   {
     capacity_ = size_;
-    data_ = realloc();
-    
+    realloc();
   }
   void resize( size_t newSize, const T & val = T() ) noexcept
   {
