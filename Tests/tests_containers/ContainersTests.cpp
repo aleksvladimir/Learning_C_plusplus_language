@@ -386,6 +386,13 @@ namespace ContainersTests
 				vec.push_back( 2 );
 				Assert::AreEqual( 2, ( int )vec.back() );
 			}
+
+			// destructor
+			{
+				Vector<int> vec( 3, 4 );
+				vec.~Vector();
+				Assert::IsTrue( vec.empty() );
+			}
 		}
 
 		TEST_METHOD( Test_std_list )

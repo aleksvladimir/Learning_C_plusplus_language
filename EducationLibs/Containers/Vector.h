@@ -36,6 +36,22 @@ public:
     data_ = alloc( capacity_ = size_ = newSize );
     std::fill( data_, data_ + size_, value ); // or memcpy
   }
+  Vector( const Vector & other )
+  {
+    //todo
+  }
+  ~Vector()
+  {
+    resize( 0 );
+    shrink_to_fit();
+  }
+
+  Vector& operator = ( Vector& other )
+  {
+    //todo
+    return *this;
+  }
+
 
   template<class U>
   void push_back( U && elem )
