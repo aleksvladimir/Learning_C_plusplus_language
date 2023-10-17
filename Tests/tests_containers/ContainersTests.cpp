@@ -210,6 +210,13 @@ namespace ContainersTests
 				vec.push_back( 1 );
 				Assert::AreEqual( 19, ( int )vec.capacity() );
 			}
+			// back
+			{
+				std::vector<int> vec;
+				vec.push_back( 1 );
+				vec.push_back( 2 );
+				Assert::AreEqual( 2, ( int )vec.back() );
+		  }
 		}
 
 		TEST_METHOD( Test_MyVector)
@@ -370,6 +377,14 @@ namespace ContainersTests
 				const Vector<int> const_vec( 5 );
 				auto& elem = const_vec[ 4 ];
 				//elem = 3;	// error: const elem
+			}
+
+			// back
+			{
+				Vector<int> vec;
+				vec.push_back( 1 );
+				vec.push_back( 2 );
+				Assert::AreEqual( 2, ( int )vec.back() );
 			}
 		}
 

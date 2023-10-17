@@ -72,6 +72,14 @@ public:
   {
     return data_[ i ];
   }
+  T& back() noexcept
+  {
+    return data_[ size_ - 1 ];
+  }
+  const T& back() const noexcept
+  {
+    return data_[ size_ - 1 ];
+  }
   T& at( size_t i ) 
   {
     if ( i < size_ )
