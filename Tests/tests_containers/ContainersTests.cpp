@@ -1,6 +1,8 @@
 #include <array>
 #include <vector>
 
+
+#include "../../EducationLibs/Containers/List.h"
 #include "../../EducationLibs/Containers/Vector.h"
 #include "CppUnitTest.h"
 
@@ -402,7 +404,12 @@ namespace ContainersTests
 
 		TEST_METHOD( Test_MyList )
 		{
-			Assert::IsTrue( false );
+			List<int> list;
+			list.push_back( 1 );
+			list.push_back( 2 );
+			list.push_back( 3 );
+			list.push_front( 0 );
+			Assert::AreEqual( 4, ( int )list.size() );
 		}
 
 		TEST_METHOD( Test_std_set )
