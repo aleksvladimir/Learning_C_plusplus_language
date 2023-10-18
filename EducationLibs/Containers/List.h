@@ -66,4 +66,8 @@ public:
   {
     return size_;
   }
+  bool empty() const noexcept
+  {
+    return head_ == tail_;
+  }
 };
