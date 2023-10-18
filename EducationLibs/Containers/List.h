@@ -4,7 +4,7 @@
  * \brief Linked list
  * \tparam T - type_value
  * todo:
- *  pop_back(), pop_front(), clear(), reverse(), sort()
+ *  sort()
  */
 template<typename T>
 class List
@@ -62,6 +62,20 @@ public:
       head_ = p;
     }    
   }
+  void pop_back()
+  {
+    auto prev = tail_->prev;
+    delete tail_;
+    tail_ = prev;
+    --size_;
+  }
+  void pop_front()
+  {
+    auto next = head_->next;
+    delete head_;
+    head_ = next;
+    --size_;
+  }
   T& back()
   {
     return tail_->value;
@@ -85,5 +99,22 @@ public:
   bool empty() const noexcept
   {
     return head_ == tail_;
+  }
+  void clear()
+  {
+    while ( tail_->prev )
+      pop_back();
+    delete head_;
+    --size_;
+  }
+  void reverse()
+  {
+    auto oldTail = tail_;
+    while ( head_ != tail_ )
+    {
+      tail_->prev = std::exchange( tail_->next, tail_->prev );
+      tail_ = tail_->next;
+    }
+    head_ = oldTail;
   }
 };

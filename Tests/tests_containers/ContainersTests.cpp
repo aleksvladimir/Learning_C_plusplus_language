@@ -404,12 +404,63 @@ namespace ContainersTests
 
 		TEST_METHOD( Test_MyList )
 		{
-			List<int> list;
-			list.push_back( 1 );
-			list.push_back( 2 );
-			list.push_back( 3 );
-			list.push_front( 0 );
-			Assert::AreEqual( 4, ( int )list.size() );
+			// push_back
+			// push_front
+			// size
+		  {
+		    List<int> list;
+		    list.push_back( 1 );
+		    list.push_back( 2 );
+		    list.push_back( 3 );
+		    list.push_front( 0 );
+		    Assert::AreEqual( 4, ( int )list.size() );
+		  }
+			// pop_back
+			// pop_front
+			{
+				List<int> list;
+				list.push_back( 1 );
+				list.push_back( 2 );
+				list.push_back( 3 );
+				list.pop_front();
+				list.pop_back();
+				Assert::AreEqual( 1, ( int )list.size() );
+				Assert::AreEqual( 2, ( int )list.back() );
+				Assert::AreEqual( 2, ( int )list.front() );
+			}
+			// back
+			// front
+			{
+				List<int> list;
+				list.push_back( 1 );
+				list.push_back( 2 );
+				list.push_back( 3 );
+				Assert::AreEqual( 1, ( int )list.front() );
+				Assert::AreEqual( 3, ( int )list.back() );
+			}
+			// clear
+			// empty
+			{
+				List<int> list;
+				list.push_back( 1 );
+				list.push_back( 2 );
+				list.push_back( 3 );
+				list.clear();
+				Assert::AreEqual( 0, ( int )list.size() );
+				Assert::IsTrue( list.empty() );
+			}
+			// reverse
+			{
+				List<int> list;
+				list.push_back( 1 );
+				list.push_back( 2 );
+				list.push_back( 3 );
+				Assert::AreEqual( 1, ( int )list.front() );
+				Assert::AreEqual( 3, ( int )list.back() );
+				list.reverse();
+				Assert::AreEqual( 3, ( int )list.front() );
+				Assert::AreEqual( 1, ( int )list.back() );
+			}
 		}
 
 		TEST_METHOD( Test_std_set )
