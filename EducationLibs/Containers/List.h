@@ -4,7 +4,7 @@
  * \brief Linked list
  * \tparam T - type_value
  * todo:
- *  pop_back(), pop_front(), clear(), reverse(), sort(), back(), front(), empty()
+ *  pop_back(), pop_front(), clear(), reverse(), sort()
  */
 template<typename T>
 class List
@@ -61,6 +61,22 @@ public:
       p->next = head_;
       head_ = p;
     }    
+  }
+  T& back()
+  {
+    return tail_->value;
+  }
+  const T& back() const
+  {
+    return tail_->value;
+  }
+  T& front()
+  {
+    return head_->value;
+  }
+  const T& front() const
+  {
+    return head_->value;
   }
   [[nodiscard]] size_t size() const noexcept
   {
