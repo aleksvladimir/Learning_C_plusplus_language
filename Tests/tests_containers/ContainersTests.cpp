@@ -461,6 +461,25 @@ namespace ContainersTests
 				Assert::AreEqual( 3, ( int )list.front() );
 				Assert::AreEqual( 1, ( int )list.back() );
 			}
+			// sort
+		  {
+				List<int> list;
+				list.push_back( 8 );
+				list.push_back( 3 );
+				list.push_back( 5 );
+				list.push_back( 2 );
+				list.push_back( 1 );
+				list.sort();
+				Assert::AreEqual( 1, ( int )list.front() );
+				list.pop_front();
+				Assert::AreEqual( 2, ( int )list.front() );
+				list.pop_front();
+				Assert::AreEqual( 3, ( int )list.front() );
+				list.pop_front();
+				Assert::AreEqual( 5, ( int )list.front() );
+				list.pop_front();
+				Assert::AreEqual( 8, ( int )list.front() );
+		  }
 		}
 
 		TEST_METHOD( Test_std_set )

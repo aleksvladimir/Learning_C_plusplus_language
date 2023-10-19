@@ -1,10 +1,8 @@
 ﻿#pragma once
 
 /**
- * \brief Linked list
+ * \brief Doubly Linked List
  * \tparam T - type_value
- * todo:
- *  sort()
  */
 template<typename T>
 class List
@@ -15,8 +13,8 @@ class List
     Node() = default;
     Node( T val ) noexcept : value( val ) {}
     T value = T();
-    Node * next = nullptr;
-    Node * prev = nullptr;
+    Node<T> * next = nullptr;
+    Node<T> * prev = nullptr;
   };
 
   Node<T>* head_ = nullptr;
@@ -116,5 +114,41 @@ public:
       tail_ = tail_->next;
     }
     head_ = oldTail;
+  }
+
+private:
+  Node<T> * partition( Node<T> * first, Node<T> * last )
+  {
+    auto pivot = first;
+    auto front = first;
+    while ( front != nullptr && front != last )
+    {
+      if ( front->value < last->value )
+      {
+        pivot = first;
+        front->value = std::exchange( first->value, front->value );
+        first = first->next;
+      }
+      front = front->next;
+    }
+    last->value = std::exchange( first->value, last->value );
+    return pivot;
+  }
+  void sort( Node<T> * first, Node<T> * last )
+  {
+    if ( first == last )
+      return;
+
+    auto pivot = partition( first, last );
+    if ( pivot != nullptr && pivot->next != nullptr )
+      sort( pivot->next, last );
+
+    if ( pivot != nullptr && first != pivot )
+      sort( first, pivot );
+  }
+public:
+  void sort()
+  {
+    sort( head_, tail_ );
   }
 };
