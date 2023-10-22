@@ -160,6 +160,7 @@
     <ClCompile Include="Array.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Deque.h" />
     <ClInclude Include="ForwardList.h" />
     <ClInclude Include="List.h" />
     <ClInclude Include="Set.h" />

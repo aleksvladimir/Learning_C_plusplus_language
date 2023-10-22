@@ -3,6 +3,7 @@
 
 
 
+#include "../../EducationLibs/Containers/Deque.h"
 #include "../../EducationLibs/Containers/ForwardList.h"
 #include "../../EducationLibs/Containers/List.h"
 #include "../../EducationLibs/Containers/Vector.h"
@@ -552,6 +553,176 @@ namespace ContainersTests
 			{
 				// todo
 			}
+		}
+
+		TEST_METHOD( Test_MyDeque )
+		{
+			// default_ctr
+			// push_back
+			// capacity
+			// size
+			// at
+			{
+				Deque<int> deque;
+				deque.push_back( 3 );
+				Assert::AreEqual( 15, ( int )deque.capacity() );
+				Assert::AreEqual( 1, ( int )deque.size() );
+				//Assert::AreEqual( 3, ( int )deque.at( 0 ) );
+				//deque.push_back( 2 );
+				//Assert::AreEqual( 2, ( int )deque.capacity() );
+				//deque.push_back( 1 );
+				//Assert::AreEqual( 4, ( int )deque.capacity() );
+				//int a = 0;
+				//deque.push_back( a );	// lvalue
+				//Assert::AreEqual( 4, ( int )deque.capacity() );
+				//Assert::AreEqual( 4, ( int )deque.size() );
+				//Assert::AreEqual( 3, ( int )deque.at( 0 ) );
+				//Assert::AreEqual( 2, ( int )deque.at( 1 ) );
+				//Assert::AreEqual( 1, ( int )deque.at( 2 ) );
+				//Assert::AreEqual( 0, ( int )deque.at( 3 ) );
+			}
+
+			//// default_ctr
+			//// pop_back
+			//// empty
+			//{
+			//	Vector<int> vec( 4 );
+			//	Assert::AreEqual( 4, ( int )vec.size() );
+			//	Assert::AreEqual( 4, ( int )vec.capacity() );
+			//	Assert::IsTrue( !vec.empty() );
+			//	vec.pop_back();
+			//	Assert::AreEqual( 3, ( int )vec.size() );
+			//	vec.pop_back();
+			//	Assert::AreEqual( 2, ( int )vec.size() );
+			//	vec.pop_back();
+			//	Assert::AreEqual( 1, ( int )vec.size() );
+			//	vec.pop_back();
+			//	vec.pop_back();
+			//	Assert::AreEqual( 0, ( int )vec.size() );
+			//	Assert::AreEqual( 4, ( int )vec.capacity() );
+			//	Assert::IsTrue( vec.empty() );
+			//}
+
+			//// reserve (about capacity)
+			//{
+			//	Vector<int> vec;
+			//	vec.reserve( 8 );
+			//	Assert::AreEqual( 8, ( int )vec.capacity() );
+			//	vec.reserve( 6 );															// doesn't reduce as shrink_to_fit!
+			//	Assert::AreEqual( 8, ( int )vec.capacity() );	// doesn't reduce as shrink_to_fit!
+			//	vec.push_back( 10 );
+			//	Assert::AreEqual( 1, ( int )vec.size() );
+			//	Assert::AreEqual( 10, ( int )vec.at( 0 ) );
+			//	vec.reserve( 16 );
+			//	Assert::AreEqual( 16, ( int )vec.capacity() );
+			//	Assert::AreEqual( 1, ( int )vec.size() );
+			//	Assert::AreEqual( 10, ( int )vec.at( 0 ) );
+			//}
+
+			//// clear
+			//{
+			//	Vector<int> vec( 16, 3 );
+			//	vec.clear();
+			//	Assert::AreEqual( 16, ( int )vec.capacity() );
+			//	Assert::AreEqual( 0, ( int )vec.size() );
+			//}
+
+			//// shrink_to_fit (C++11)
+			//{
+			//	Vector<int> vec;
+			//	vec.reserve( 16 );
+			//	Assert::AreEqual( 0, ( int )vec.size() );
+			//	vec.push_back( 11 );
+			//	vec.push_back( 12 );
+			//	vec.push_back( 13 );
+			//	Assert::AreEqual( 3, ( int )vec.size() );
+			//	Assert::AreEqual( 16, ( int )vec.capacity() );
+			//	vec.shrink_to_fit();
+			//	Assert::AreEqual( 3, ( int )vec.capacity() );
+			//	vec.clear();
+			//	vec.shrink_to_fit();
+			//	Assert::AreEqual( 0, ( int )vec.capacity() );
+			//}
+
+			////resize (about size)
+			//{
+			//	Vector<int> vec;
+			//	vec.resize( 1 );
+			//	Assert::AreEqual( 1, ( int )vec.size() );
+			//	Assert::AreEqual( 1, ( int )vec.capacity() );
+			//	vec.push_back( 11 );
+			//	Assert::AreEqual( 2, ( int )vec.size() );
+			//	Assert::AreEqual( 2, ( int )vec.capacity() );
+			//	Assert::AreEqual( 0, ( int )vec.at( 0 ) );
+			//	Assert::AreEqual( 11, ( int )vec.at( 1 ) );
+			//}
+			//{
+			//	Vector<int> vec( 2, 3 );
+			//	Assert::AreEqual( 2, ( int )vec.size() );
+			//	Assert::AreEqual( 2, ( int )vec.capacity() );
+			//	Assert::AreEqual( 3, ( int )vec.at( 0 ) );
+			//	Assert::AreEqual( 3, ( int )vec.at( 1 ) );
+			//	vec.resize( 5 );
+			//	Assert::AreEqual( 5, ( int )vec.size() );
+			//	Assert::AreEqual( 5, ( int )vec.capacity() );
+			//	Assert::AreEqual( 3, ( int )vec.at( 0 ) );
+			//	Assert::AreEqual( 3, ( int )vec.at( 1 ) );
+			//}
+			//{
+			//	Vector<int> vec( 5, 3 );
+			//	Assert::AreEqual( 5, ( int )vec.size() );
+			//	Assert::AreEqual( 5, ( int )vec.capacity() );
+
+			//	vec.resize( 1, 3 );
+			//	Assert::AreEqual( 1, ( int )vec.size() );
+			//	Assert::AreEqual( 5, ( int )vec.capacity() );
+			//	Assert::AreEqual( 3, ( int )vec.at( 0 ) );
+
+			//	vec.resize( 3, 66 );
+			//	Assert::AreEqual( 3, ( int )vec.size() );
+			//	Assert::AreEqual( 5, ( int )vec.capacity() );
+			//	Assert::AreEqual( 3, ( int )vec.at( 0 ) );
+			//	Assert::AreEqual( 66, ( int )vec.at( 1 ) );
+			//	Assert::AreEqual( 66, ( int )vec.at( 2 ) );
+
+			//	vec.resize( 7, 77 );
+			//	Assert::AreEqual( 7, ( int )vec.size() );
+			//	Assert::AreEqual( 7, ( int )vec.capacity() );
+			//	Assert::AreEqual( 3, ( int )vec.at( 0 ) );
+			//	Assert::AreEqual( 66, ( int )vec.at( 1 ) );
+			//	Assert::AreEqual( 66, ( int )vec.at( 2 ) );
+			//	Assert::AreEqual( 77, ( int )vec.at( 3 ) );
+			//	Assert::AreEqual( 77, ( int )vec.at( 4 ) );
+			//	Assert::AreEqual( 77, ( int )vec.at( 5 ) );
+			//	Assert::AreEqual( 77, ( int )vec.at( 6 ) );
+			//}
+			//// []
+			//{
+			//	Vector<int> vec( 3 );
+			//	vec.push_back( 4 );
+			//	Assert::AreEqual( 6, ( int )vec.capacity() );
+			//	vec.push_back( 6 );
+			//	Assert::AreEqual( 4, ( int )vec[ 3 ] );
+			//	Assert::AreEqual( 6, ( int )vec[ 4 ] );
+			//	const Vector<int> const_vec( 5 );
+			//	auto & elem = const_vec[ 4 ];
+			//	//elem = 3;	// error: const elem
+			//}
+
+			//// back
+			//{
+			//	Vector<int> vec;
+			//	vec.push_back( 1 );
+			//	vec.push_back( 2 );
+			//	Assert::AreEqual( 2, ( int )vec.back() );
+			//}
+
+			//// destructor
+			//{
+			//	Vector<int> vec( 3, 4 );
+			//	vec.~Vector();
+			//	Assert::IsTrue( vec.empty() );
+			//}
 		}
 
 		TEST_METHOD( Test_std_set )

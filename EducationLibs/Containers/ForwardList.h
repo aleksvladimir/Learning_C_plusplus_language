@@ -1,7 +1,7 @@
 ﻿#pragma once
 
 /**
- * \brief Single Linked List
+ * \brief Singly Linked List
  * \tparam T - type_value
  */
 template<typename T>
