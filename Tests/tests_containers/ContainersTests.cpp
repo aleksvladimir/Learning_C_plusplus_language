@@ -2,6 +2,8 @@
 #include <vector>
 
 
+
+#include "../../EducationLibs/Containers/ForwardList.h"
 #include "../../EducationLibs/Containers/List.h"
 #include "../../EducationLibs/Containers/Vector.h"
 #include "CppUnitTest.h"
@@ -480,6 +482,76 @@ namespace ContainersTests
 				list.pop_front();
 				Assert::AreEqual( 8, ( int )list.front() );
 		  }
+		}
+
+	  TEST_METHOD( Test_MyForwardList )
+		{
+			// push_front
+			// size
+			{
+				ForwardList<int> list;
+				list.push_front( 3 );
+				list.push_front( 4 );
+				list.push_front( 5 );
+				list.push_front( 6 );
+				Assert::AreEqual( 4, ( int )list.size() );
+			}
+			// pop_front
+			{
+				ForwardList<int> list;
+				list.push_front( 3 );
+				list.push_front( 4 );
+				list.push_front( 5 );
+				list.push_front( 6 );
+				list.pop_front();
+				list.pop_front();
+				list.pop_front();
+				Assert::AreEqual( 1, ( int )list.size() );
+				Assert::AreEqual( 3, ( int )list.front() );
+			}
+			// front
+			{
+				ForwardList<int> list;
+				list.push_front( 3 );
+				list.push_front( 4 );
+				Assert::AreEqual( 4, ( int )list.front() );
+				list.push_front( 5 );
+				list.push_front( 6 );
+				Assert::AreEqual( 6, ( int )list.front() );
+			}
+			// clear
+			// empty
+			{
+				ForwardList<int> list;
+				list.push_front( 3 );
+				list.push_front( 4 );
+				list.push_front( 5 );
+				list.push_front( 6 );
+				list.clear();
+				Assert::AreEqual( 0, ( int )list.size() );
+				Assert::IsTrue( list.empty() );
+			}
+			// reverse
+			{
+				ForwardList<int> list;
+				list.push_front( 3 );
+				list.push_front( 4 );
+				list.push_front( 5 );
+				list.push_front( 6 );
+				Assert::AreEqual( 6, ( int )list.front() );
+				list.reverse();
+				Assert::AreEqual( 3, ( int )list.front() );
+				list.pop_front();
+				Assert::AreEqual( 4, ( int )list.front() );
+				list.pop_front();
+				Assert::AreEqual( 5, ( int )list.front() );
+				list.pop_front();
+				Assert::AreEqual( 6, ( int )list.front() );
+			}
+			// sort
+			{
+				// todo
+			}
 		}
 
 		TEST_METHOD( Test_std_set )
