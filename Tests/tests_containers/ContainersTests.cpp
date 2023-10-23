@@ -1,4 +1,5 @@
 #include <array>
+#include <deque>
 #include <vector>
 
 
@@ -555,31 +556,41 @@ namespace ContainersTests
 			}
 		}
 
+		TEST_METHOD( Test_std_deque)
+		{
+			// at
+			{
+				std::deque<int> deque;
+				deque.push_back( 3 );
+				deque.push_back( 4 );
+				deque.push_back( 5 );
+				deque.push_front( 2 );
+				deque.push_front( 1 );
+				deque.push_front( 0 );
+        for (int i = 0; i < deque.size(); ++i)
+					Assert::AreEqual( i, ( int )deque[ i ] );
+			}
+		}
 		TEST_METHOD( Test_MyDeque )
 		{
 			// default_ctr
 			// push_back
-			// capacity
+			// push_front
 			// size
-			// at
+		  // at
 			{
-				Deque<int> deque;
+				circular_array_algorithm::Deque<int> deque;
 				deque.push_back( 3 );
-				Assert::AreEqual( 15, ( int )deque.capacity() );
-				Assert::AreEqual( 1, ( int )deque.size() );
-				//Assert::AreEqual( 3, ( int )deque.at( 0 ) );
-				//deque.push_back( 2 );
-				//Assert::AreEqual( 2, ( int )deque.capacity() );
-				//deque.push_back( 1 );
-				//Assert::AreEqual( 4, ( int )deque.capacity() );
-				//int a = 0;
-				//deque.push_back( a );	// lvalue
-				//Assert::AreEqual( 4, ( int )deque.capacity() );
-				//Assert::AreEqual( 4, ( int )deque.size() );
-				//Assert::AreEqual( 3, ( int )deque.at( 0 ) );
-				//Assert::AreEqual( 2, ( int )deque.at( 1 ) );
-				//Assert::AreEqual( 1, ( int )deque.at( 2 ) );
-				//Assert::AreEqual( 0, ( int )deque.at( 3 ) );
+				deque.push_back( 4 );
+				deque.push_back( 5 );
+				deque.push_front( 2 );
+				deque.push_front( 1 );
+				deque.push_front( 0 );
+				for ( int i = 0; i < deque.size(); ++i )
+				{
+					Assert::AreEqual( i, ( int )deque[ i ] );
+					Assert::AreEqual( i, ( int )deque.at( i ) );
+				}
 			}
 
 			//// default_ctr
