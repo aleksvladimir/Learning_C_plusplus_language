@@ -100,10 +100,8 @@ namespace like_linked_list
 {
   /*
    *  push_back(), pop_back(), push_front(), clear(), size(), resize(), empty(), pop_front()
-   *  shrink_to_fit()
-   * todo:
-   *  
    *  at(), []
+   *  
    */
 
    /**
