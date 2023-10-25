@@ -7,6 +7,7 @@
 #include "../../EducationLibs/Containers/Deque.h"
 #include "../../EducationLibs/Containers/ForwardList.h"
 #include "../../EducationLibs/Containers/List.h"
+#include "../../EducationLibs/Containers/Set.h"
 #include "../../EducationLibs/Containers/Vector.h"
 #include "CppUnitTest.h"
 
@@ -737,7 +738,39 @@ namespace ContainersTests
 
 		TEST_METHOD( Test_MySet )
 		{
-			Assert::IsTrue( false );
+			// insert
+			{
+				//          2
+				//        1     3
+				Set<int> container;
+				container.insert(2);
+				container.insert(3);
+				container.insert(1);
+				Assert::AreEqual( 3, ( int )container.size() );
+			  Assert::AreEqual( 0, ( int )container.size() );
+			}
+			{
+				//          2																						3
+				//        1     3																		 2		  5
+				//            4   5																 1		  4   6
+				//						      6 !!! (need balancing)                     
+				//Set<int> container;
+				//container.insert( 2 );
+				//container.insert( 3 );
+				//container.insert( 1 );
+				//container.insert( 5 );
+				//container.insert( 4 );
+				//container.insert( 6 );
+				//Assert::AreEqual( 6, ( int )container.size() );
+			}
+			// clear
+			// size
+			{
+				Set<int> container{ 1, 2, 3 };
+				Assert::AreEqual( 3, ( int )container.size() );
+				container.clear();
+			  Assert::AreEqual( 0, ( int )container.size() );
+			}
 		}
 
 		TEST_METHOD( Test_std_unordered_set )
