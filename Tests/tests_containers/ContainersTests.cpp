@@ -739,37 +739,27 @@ namespace ContainersTests
 		TEST_METHOD( Test_MySet )
 		{
 			// insert
-			{
-				//          2
-				//        1     3
-				Set<int> container;
-				container.insert(2);
-				container.insert(3);
-				container.insert(1);
-				Assert::AreEqual( 3, ( int )container.size() );
-			  Assert::AreEqual( 0, ( int )container.size() );
-			}
-			{
-				//          2																						3
-				//        1     3																		 2		  5
-				//            4   5																 1		  4   6
-				//						      6 !!! (need balancing)                     
-				//Set<int> container;
-				//container.insert( 2 );
-				//container.insert( 3 );
-				//container.insert( 1 );
-				//container.insert( 5 );
-				//container.insert( 4 );
-				//container.insert( 6 );
-				//Assert::AreEqual( 6, ( int )container.size() );
-			}
-			// clear
+			// find
 			// size
+			// todo: erase
 			{
-				Set<int> container{ 1, 2, 3 };
-				Assert::AreEqual( 3, ( int )container.size() );
-				container.clear();
-			  Assert::AreEqual( 0, ( int )container.size() );
+				Set<int> container;
+				container.insert(7);
+				container.insert(4);
+				container.insert(11);
+				container.insert(9);
+				container.insert(15);
+				container.insert(8);
+				container.insert(10);
+				Assert::AreEqual( 7, ( int )container.size() );
+				auto it = container.find( 15 );
+				Assert::IsTrue( it != nullptr );
+				Assert::AreEqual( 15, ( int )it->data );
+				it = container.find( 7 );
+				Assert::IsTrue( it != nullptr );
+				Assert::AreEqual( 7, ( int )it->data );
+				it = container.find( 2 );
+				Assert::IsTrue( it == nullptr );
 			}
 		}
 

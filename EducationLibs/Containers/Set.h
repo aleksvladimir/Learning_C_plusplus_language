@@ -4,9 +4,11 @@
  * \brief 
  * \tparam T
  *
+ * size(), insert(), empty()
+ *
  * // todo:
- * - insert(), erase(), find()
- * - clear(), size(), empty()
+ * - erase(), find()
+ * - clear() 
  */
 template<typename T>
 class Set
@@ -45,21 +47,43 @@ public:
   {
     //todo
   }
-  size_t size()
+  template<typename U>
+  size_t erase( U && data )
   {
-    return 0;
+    //todo
+    return 0u;
+  }
+  Node* find( const T & data )
+  {
+    return empty() ? nullptr : find( root_, data );
+  }
+  Node* find( Node* & node, const T & data )
+  {
+    if ( data < node->data )
+      return node->left ? find( node->left, data ) : nullptr;
+    if ( data > node->data )
+      return node->right ? find( node->right, data ) : nullptr;
+    return node;
+  }
+  [[nodiscard]] size_t size() const noexcept
+  {
+    return size_;
   }
   template<typename U>
   void insert( U&& data )
   {
     if ( empty() )
       root_ = new Node( std::forward<U>( data ) );
-    else if ( insert( root_, data ) )
-      size_++;
+    else if ( !insert( root_, std::forward<U>( data ) ) )
+      return;
+    size_++;
   }
-  [[nodiscard]] bool insert( Node* node, const T & data )
+  template<typename U>
+  [[nodiscard]] bool insert( Node* node, U && data )
   {
-    return false; // todo
+    if ( data < node->data )
+      return node->left ? insert( node->left, data ) : node->left = new Node( std::forward<U>( data ) );
+    return node->right ? insert( node->right, data ) : node->right = new Node( std::forward<U>( data ) );
   }
   [[nodiscard]] bool empty() const noexcept
   {
