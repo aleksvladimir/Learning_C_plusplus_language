@@ -4,10 +4,10 @@
  * \brief 
  * \tparam T
  *
- * size(), insert(), empty()
+ * size(), insert(), empty(), find()
  *
  * // todo:
- * - erase(), find()
+ * - erase()
  * - clear() 
  */
 template<typename T>
