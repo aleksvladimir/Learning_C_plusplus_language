@@ -45,26 +45,67 @@ public:
    */
   void clear()
   {
-    //todo
+    if ( !empty() )
+    {
+      removeNode( root_ );
+      size_ = 0;
+    }
   }
+private:
+  void removeNode( Node*& node )
+  {
+    if ( node )
+    {
+      removeNode( node->left );
+      removeNode( node->right );
+      delete node;
+      node = nullptr;
+    }
+  }
+public:
   template<typename U>
-  size_t erase( U && data )
+  [[nodiscard]] size_t erase( U && data )
   {
-    //todo
-    return 0u;
+    size_t res = 0u;
+    if ( !empty() )
+    {
+      Node*& it = find( root_, data );
+      if ( it && !it->left && !it->right )
+      {
+        // left and right children is null
+        delete it;
+        it = nullptr;
+        size_--;
+        res = 1u;
+      }
+      else
+      {
+        //todo: 1 step to right and find node with minimal value,
+        //      if all children is null then
+        //        change current value with minimal value
+        //        and destroy found node
+      }
+    }
+    return res;
   }
-  Node* find( const T & data )
+  Node*& find( const T & data )
   {
-    return empty() ? nullptr : find( root_, data );
+    if ( !empty() )
+      return find( root_, data );
+    return root_;
   }
-  Node* find( Node* & node, const T & data )
+private:
+  Node*& find( Node* & node, const T & data )
   {
+    if ( node == nullptr )
+      return node;
     if ( data < node->data )
-      return node->left ? find( node->left, data ) : nullptr;
+      return find( node->left, data );
     if ( data > node->data )
-      return node->right ? find( node->right, data ) : nullptr;
+      return find( node->right, data );
     return node;
   }
+public:
   [[nodiscard]] size_t size() const noexcept
   {
     return size_;

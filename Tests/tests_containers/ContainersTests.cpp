@@ -741,7 +741,7 @@ namespace ContainersTests
 			// insert
 			// find
 			// size
-			// todo: erase
+			// clear
 			{
 				Set<int> container;
 				container.insert(7);
@@ -760,6 +760,20 @@ namespace ContainersTests
 				Assert::AreEqual( 7, ( int )it->data );
 				it = container.find( 2 );
 				Assert::IsTrue( it == nullptr );
+				container.clear();
+				Assert::IsTrue( container.empty() );
+				container.insert( 7 );
+				it = container.find( 7 );
+				Assert::IsTrue( it != nullptr );
+			}
+			// erase
+			{
+				Set<int> container;
+				container.insert( 7 );
+				container.insert( 4 );
+				container.insert( 2 );
+        const auto isErase = static_cast< bool >( container.erase( 2 ) );
+				Assert::IsTrue( isErase );
 			}
 		}
 
