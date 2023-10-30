@@ -775,6 +775,23 @@ namespace ContainersTests
         const auto isErase = static_cast< bool >( container.erase( 2 ) );
 				Assert::IsTrue( isErase );
 			}
+			// erase
+			{
+				Set<int> container;
+				container.insert( 20 );
+				container.insert( 50 );
+				container.insert( 60 );
+				container.insert( 55 );
+				container.insert( 57 );
+				auto isErase = static_cast< bool >( container.erase( 50 ) );
+				Assert::IsTrue( isErase );
+				auto it = container.find( 20 );
+				Assert::IsTrue( it->right->right->left->data == 57 );
+
+				isErase = static_cast< bool >( container.erase( 60 ) );
+				Assert::IsTrue( isErase );
+				Assert::IsTrue( it->right->right->data == 57 );
+			}
 		}
 
 		TEST_METHOD( Test_std_unordered_set )

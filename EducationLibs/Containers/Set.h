@@ -69,22 +69,48 @@ public:
     size_t res = 0u;
     if ( !empty() )
     {
-      Node*& it = find( root_, data );
-      if ( it && !it->left && !it->right )
+      Node*& delNode = find( root_, data );
+      if ( !delNode )
+        return res;
+
+      if ( !delNode->right )
       {
-        // left and right children is null
-        delete it;
-        it = nullptr;
-        size_--;
-        res = 1u;
+        if ( delNode->left )
+        {
+          std::swap( delNode->data, delNode->left->data );
+          delete delNode->left;
+          delNode->left = nullptr;
+        }
+        else
+        {
+          delete delNode;
+          delNode = nullptr;
+        }
       }
       else
       {
-        //todo: 1 step to right and find node with minimal value,
-        //      if all children is null then
-        //        change current value with minimal value
-        //        and destroy found node
+        // 1 step to right and find node with minimal value,
+        // if all children is null then
+        //   change current value with minimal value
+        //   and destroy found node
+        Node* leftMost = delNode->right;
+        while( leftMost->left )
+          leftMost = leftMost->left;
+        std::swap( delNode->data, leftMost->data );
+        if ( leftMost->right )
+        {
+          std::swap( leftMost->data, leftMost->right->data );
+          delete leftMost->right;
+          leftMost->right = nullptr;
+        }
+        else
+        {
+          delete leftMost;
+          leftMost = nullptr;
+        }
       }
+      size_--;
+      res = 1u;
     }
     return res;
   }
