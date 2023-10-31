@@ -4,11 +4,7 @@
  * \brief 
  * \tparam T
  *
- * size(), insert(), empty(), find()
- *
- * // todo:
- * - erase()
- * - clear() 
+ * size(), insert(), empty(), find(), erase(), clear() 
  */
 template<typename T>
 class Set

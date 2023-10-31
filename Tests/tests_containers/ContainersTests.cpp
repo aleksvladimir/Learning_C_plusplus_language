@@ -8,6 +8,7 @@
 #include "../../EducationLibs/Containers/ForwardList.h"
 #include "../../EducationLibs/Containers/List.h"
 #include "../../EducationLibs/Containers/Set.h"
+#include "../../EducationLibs/Containers/UnorderedSet.h"
 #include "../../EducationLibs/Containers/Vector.h"
 #include "CppUnitTest.h"
 
@@ -801,6 +802,18 @@ namespace ContainersTests
 
 		TEST_METHOD( Test_MyUnorderedSet )
 		{
+			Assert::IsTrue( false );
+		}
+
+		TEST_METHOD( Test_DoubleHashingProbing )
+		{
+			// DoubleHashingProbing
+			HashTableWithOpenAddressing<int, std::string> hash_table;
+			hash_table.insert( { 5, "500" }  );
+			hash_table.insert( { 3, "300" }  );
+			hash_table.insert( { 9, "900" }  );
+			hash_table.insert( { 1, "100" }  );
+
 			Assert::IsTrue( false );
 		}
 	};
