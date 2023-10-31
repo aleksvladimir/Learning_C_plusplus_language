@@ -802,7 +802,15 @@ namespace ContainersTests
 
 		TEST_METHOD( Test_MyUnorderedSet )
 		{
-			Assert::IsTrue( false );
+			UnorderedSet<int, std::string> unorderedSet;
+			Assert::IsTrue( unorderedSet.size() == 0 );
+			Assert::IsTrue( unorderedSet.empty() );
+			unorderedSet.insert( 5 );
+			unorderedSet.insert( 3 );
+			unorderedSet.insert( 9 );
+			unorderedSet.insert( 1 );
+			Assert::IsTrue( unorderedSet.size() == 4 );
+			Assert::IsTrue( !unorderedSet.empty() );
 		}
 
 		TEST_METHOD( Test_DoubleHashingProbing )

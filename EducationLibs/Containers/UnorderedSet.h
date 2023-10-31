@@ -1,14 +1,86 @@
 ﻿#pragma once
-
+#include <list>
 
 
 /**
- * \brief
- * \tparam T
+ * \brief UnorderedSet based on doubly linked list
+ * \tparam K 
+ * \tparam Hash 
+ * \tparam KeyEqual
  *
- * todo: - insert(), erase(), find(), at(), clear(), size(), empty()
- */
+ * insert(), size(), empty()
+ * todo: erase(), find(), at(), clear()
+  */
+template< typename K, typename Hash = std::hash<K>, typename KeyEqual = std::equal_to<K> >
+class UnorderedSet
+{
+  using list_type = std::list<K>;
+  using buckets_type = std::vector<list_type *>;
+  list_type list_;           // list of elements in bucket
+  size_t bucket_count_ = 0;  // buckets count
+  buckets_type buckets_;     // buckets vector
+  size_t size_ = 0;          // elements count
 
+public:
+
+  [[nodiscard]] bool insert( const K & value )
+  {
+    if ( buckets_.empty() )
+      rehash();
+    if ( load_factor() > 0.7 )
+      rehash();
+
+    auto index = bucket_index( value );
+    buckets_[ index ]->push_back( value );
+    ++size_;
+    return true;
+  }
+
+  void rehash()
+  {
+    buckets_type new_buckets( buckets_.size() * 2 + 1 );
+    for ( auto & ptrToList : new_buckets )
+      ptrToList = new list_type;
+
+    buckets_.swap( new_buckets );
+
+    // copy old elements with new bucket index (rehash)
+    for ( auto ptrToList : new_buckets )
+    {
+      while ( !ptrToList->empty() )
+      {
+        auto value = ptrToList->front();
+        ptrToList->pop_front();
+        auto index = bucket_index( value );
+        buckets_[ index ]->push_back( value );
+      }
+    }
+    for ( auto & ptrToList : new_buckets )
+      delete ptrToList;
+    bucket_count_ = buckets_.size();
+  }
+
+  [[nodiscard]] float load_factor() const
+  {
+    return size_ / static_cast< float >( bucket_count_ );
+  }
+
+  [[nodiscard]] size_t size() const noexcept
+  {
+    return size_;
+  }
+
+  [[nodiscard]] size_t empty() const noexcept
+  {
+    return size_ == 0;
+  }
+private:
+
+  [[nodiscard]] size_t bucket_index( const K & key ) const
+  {
+    return std::hash<K>{}( key ) % buckets_.size();
+  }
+};
 
 // DoubleHashingProbing
 // taken from https://github.com/VladimirBalun/Algorithms/blob/master/DataStructures/HashTableWithOpenAddressing.cpp
