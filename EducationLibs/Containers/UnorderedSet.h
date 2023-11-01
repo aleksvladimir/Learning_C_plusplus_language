@@ -79,7 +79,7 @@ public:
 
     // remove key from list
     auto it = listPtr->begin();
-    for ( ; it != listPtr->end(); )
+    for ( ; it != listPtr->end(); ++it )
     {
       if ( *it == key )
       {
