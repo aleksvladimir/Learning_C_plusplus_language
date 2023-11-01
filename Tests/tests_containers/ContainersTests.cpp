@@ -8,6 +8,7 @@
 #include "../../EducationLibs/Containers/ForwardList.h"
 #include "../../EducationLibs/Containers/List.h"
 #include "../../EducationLibs/Containers/Set.h"
+#include "../../EducationLibs/Containers/Stack.h"
 #include "../../EducationLibs/Containers/UnorderedSet.h"
 #include "../../EducationLibs/Containers/Vector.h"
 #include "CppUnitTest.h"
@@ -834,6 +835,36 @@ namespace ContainersTests
 				Assert::IsNull( unorderedSet.erase( 3 ) );
 				unorderedSet.clear();
 				Assert::IsTrue( unorderedSet.size() == 0 );
+			}
+		}
+
+		TEST_METHOD( Test_MyStack )
+		{
+			// push
+			// pop
+			// size
+			// empty
+			// emplace
+			{
+				Stack<int> stack;
+				stack.push( 3 );
+				stack.push( 5 );
+				stack.push( 7 );
+				stack.pop();
+				Assert::IsTrue( stack.size() == 2 );
+				stack.pop();
+				stack.pop();
+				Assert::IsTrue( stack.empty() );
+				stack.push( 1 );
+				stack.push( 3 );
+				stack.push( 6 );
+				auto value = stack.top();
+				stack.pop();
+				stack.push( 5 );
+				stack.push( value );
+				Assert::IsTrue( stack.top() == 6 );
+				stack.emplace( 7 );
+				Assert::IsTrue( stack.top() == 7 );
 			}
 		}
 	};

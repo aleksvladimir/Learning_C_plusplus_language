@@ -157,13 +157,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Array.h" />
-  </ItemGroup>
-  <ItemGroup>
     <ClInclude Include="Deque.h" />
     <ClInclude Include="ForwardList.h" />
     <ClInclude Include="List.h" />
     <ClInclude Include="Set.h" />
+    <ClInclude Include="Stack.h" />
     <ClInclude Include="UnorderedSet.h" />
     <ClInclude Include="Vector.h" />
   </ItemGroup>
