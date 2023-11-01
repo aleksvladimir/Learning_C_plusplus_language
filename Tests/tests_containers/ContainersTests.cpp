@@ -802,15 +802,35 @@ namespace ContainersTests
 
 		TEST_METHOD( Test_MyUnorderedSet )
 		{
-			UnorderedSet<int, std::string> unorderedSet;
-			Assert::IsTrue( unorderedSet.size() == 0 );
-			Assert::IsTrue( unorderedSet.empty() );
-			unorderedSet.insert( 5 );
-			unorderedSet.insert( 3 );
-			unorderedSet.insert( 9 );
-			unorderedSet.insert( 1 );
-			Assert::IsTrue( unorderedSet.size() == 4 );
-			Assert::IsTrue( !unorderedSet.empty() );
+			//insert
+			//size
+			//empty
+		  {
+		    UnorderedSet<int, std::string> unorderedSet;
+		    Assert::IsTrue( unorderedSet.size() == 0 );
+		    Assert::IsTrue( unorderedSet.empty() );
+		    unorderedSet.insert( 5 );
+		    unorderedSet.insert( 3 );
+		    unorderedSet.insert( 9 );
+		    unorderedSet.insert( 1 );
+		    Assert::IsTrue( unorderedSet.size() == 4 );
+		    Assert::IsTrue( !unorderedSet.empty() );
+		  }
+			//erase
+			//find
+			//clear
+			{
+				UnorderedSet<int, std::string> unorderedSet;
+				unorderedSet.insert( 5 );
+				unorderedSet.insert( 3 );
+				unorderedSet.insert( 9 );
+				unorderedSet.insert( 1 );
+        const auto ptr = unorderedSet.erase( 3 );
+				const auto ptr2 = unorderedSet.find( 3 );
+				Assert::IsTrue( ptr == nullptr && ptr2 == nullptr );
+				unorderedSet.clear();
+				Assert::IsTrue( unorderedSet.size() == 0 );
+			}
 		}
 
 		TEST_METHOD( Test_DoubleHashingProbing )

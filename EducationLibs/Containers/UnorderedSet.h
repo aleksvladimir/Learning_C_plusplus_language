@@ -3,13 +3,12 @@
 
 
 /**
- * \brief UnorderedSet based on doubly linked list
- * \tparam K 
- * \tparam Hash 
- * \tparam KeyEqual
+ * \brief UnorderedSet based on std::list
+ * \tparam K - value
+ * \tparam Hash - hash function
+ * \tparam KeyEqual - operator ==
  *
- * insert(), size(), empty()
- * todo: erase(), find(), at(), clear()
+ * insert(), size(), empty(), erase(), find(), clear()
   */
 template< typename K, typename Hash = std::hash<K>, typename KeyEqual = std::equal_to<K> >
 class UnorderedSet
@@ -17,7 +16,6 @@ class UnorderedSet
   using list_type = std::list<K>;
   using buckets_type = std::vector<list_type *>;
   list_type list_;           // list of elements in bucket
-  size_t bucket_count_ = 0;  // buckets count
   buckets_type buckets_;     // buckets vector
   size_t size_ = 0;          // elements count
 
@@ -57,12 +55,11 @@ public:
     }
     for ( auto & ptrToList : new_buckets )
       delete ptrToList;
-    bucket_count_ = buckets_.size();
   }
 
   [[nodiscard]] float load_factor() const
   {
-    return size_ / static_cast< float >( bucket_count_ );
+    return size_ / static_cast< float >( buckets_.size() );
   }
 
   [[nodiscard]] size_t size() const noexcept
@@ -73,6 +70,48 @@ public:
   [[nodiscard]] size_t empty() const noexcept
   {
     return size_ == 0;
+  }
+  [[nodiscard]] K* erase( const K& key )
+  {
+    // find bucket
+    auto bucketIdx = bucket_index( key );
+    auto listPtr = buckets_[ bucketIdx ];
+
+    // remove key from list
+    auto it = listPtr->begin();
+    for ( ; it != listPtr->end(); )
+    {
+      if ( *it == key )
+      {
+        listPtr->erase( it++ );
+        --size_;
+        break;
+      }
+    }
+    if ( it == listPtr->end() )
+      return nullptr;
+    return &( *it );
+  }
+  K* find( const K & key )
+  {
+    // find bucket
+    auto bucketIdx = bucket_index( key );
+    auto listPtr = buckets_[ bucketIdx ];
+    // find key in list
+    auto it = std::find( listPtr->begin(), listPtr->end(), key );
+    if ( it == listPtr->end() )
+      return nullptr;
+    return &( *it );
+  }
+  void clear()
+  {
+    for (auto& listPtr : buckets_)
+    {
+      listPtr->clear();
+      delete listPtr;
+      listPtr = nullptr;
+    }
+    size_ = 0;
   }
 private:
 
