@@ -7,6 +7,7 @@
 #include "../../EducationLibs/Containers/Deque.h"
 #include "../../EducationLibs/Containers/ForwardList.h"
 #include "../../EducationLibs/Containers/List.h"
+#include "../../EducationLibs/Containers/Queue.h"
 #include "../../EducationLibs/Containers/Set.h"
 #include "../../EducationLibs/Containers/Stack.h"
 #include "../../EducationLibs/Containers/UnorderedSet.h"
@@ -865,6 +866,37 @@ namespace ContainersTests
 				Assert::IsTrue( stack.top() == 6 );
 				stack.emplace( 7 );
 				Assert::IsTrue( stack.top() == 7 );
+			}
+		}
+		TEST_METHOD( Test_MyQueue )
+		{
+			// push
+			// pop
+			// back
+			// front
+			// size
+			// empty
+			// emplace
+			{
+				Queue<int> queue;
+				queue.push( 3 );
+				queue.push( 5 );
+				queue.push( 7 );
+				queue.pop();
+				Assert::IsTrue( queue.size() == 2 );
+				queue.pop();
+				queue.pop();
+				Assert::IsTrue( queue.empty() );
+				queue.push( 1 );
+				queue.push( 2 );
+				queue.push( 3 );
+				auto value = queue.front();
+				queue.pop();
+				queue.push( 4 );
+				queue.push( value );
+				Assert::IsTrue( queue.back() == 1 );
+				queue.emplace( 7 );
+				Assert::IsTrue( queue.back() == 7 );
 			}
 		}
 	};

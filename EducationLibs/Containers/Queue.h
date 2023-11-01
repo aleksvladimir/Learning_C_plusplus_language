@@ -1,25 +1,24 @@
 #pragma once
 #include <deque>
 
-
 /**
- * \brief LIFO
- * pop(), push(), size(), empty(), top(), emplace()
+ * \brief FIFO
+ * push(), pop(), size(), empty(), back(), front(), emplace()
  */
-template<typename T, class Container = std::deque<T>> // vector, list or deque
-class Stack
+template<typename T, class Container = std::deque<T>> // list or deque
+class Queue
 {
   Container container_;
 
 public:
   template<typename U>
-  void push( U&& value )
+  void push( U && value )
   {
     container_.push_back( std::forward<U>( value ) );
   }
   void pop()
   {
-    container_.pop_back();
+    container_.pop_front();
   }
   [[nodiscard]] size_t size() const noexcept
   {
@@ -29,9 +28,13 @@ public:
   {
     return container_.empty();
   }
-  T& top()
+  T & back()
   {
     return container_.back();
+  }
+  T & front()
+  {
+    return container_.front();
   }
   template<class... Args>
   void emplace( Args&&... args )
