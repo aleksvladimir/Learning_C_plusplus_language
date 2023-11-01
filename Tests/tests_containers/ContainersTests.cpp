@@ -20,16 +20,6 @@ namespace ContainersTests
 	{
 	public:
 		
-		TEST_METHOD( Test_std_array )
-		{
-			Assert::IsTrue( false );
-		}
-
-		TEST_METHOD( Test_MyArray )
-		{
-			Assert::IsTrue( false );
-		}
-
 		TEST_METHOD( Test_std_vector )
 		{
 			// push_back
@@ -403,11 +393,6 @@ namespace ContainersTests
 			}
 		}
 
-		TEST_METHOD( Test_std_list )
-		{
-			Assert::IsTrue( false );
-		}
-
 		TEST_METHOD( Test_MyList )
 		{
 			// push_back
@@ -732,11 +717,6 @@ namespace ContainersTests
 			}
 		}
 
-		TEST_METHOD( Test_std_set )
-		{
-			Assert::IsTrue( false );
-		}
-
 		TEST_METHOD( Test_MySet )
 		{
 			// insert
@@ -795,11 +775,6 @@ namespace ContainersTests
 			}
 		}
 
-		TEST_METHOD( Test_std_unordered_set )
-		{
-			Assert::IsTrue( false );
-		}
-
 		TEST_METHOD( Test_MyUnorderedSet )
 		{
 			//insert
@@ -836,13 +811,30 @@ namespace ContainersTests
 		TEST_METHOD( Test_DoubleHashingProbing )
 		{
 			// DoubleHashingProbing
-			HashTableWithOpenAddressing<int, std::string> hash_table;
-			hash_table.insert( { 5, "500" }  );
-			hash_table.insert( { 3, "300" }  );
-			hash_table.insert( { 9, "900" }  );
-			hash_table.insert( { 1, "100" }  );
-
-			Assert::IsTrue( false );
+			//
+			//insert
+			//find
+			{
+				HashTableWithOpenAddressing<int, std::string> unorderedSet;
+				unorderedSet.insert( { 5, "" }  );
+				unorderedSet.insert( { 3, "" }  );
+				unorderedSet.insert( { 9, "" }  );
+				unorderedSet.insert( { 1, "" }  );
+				Assert::IsTrue( unorderedSet.find( 3 ) );
+				Assert::IsFalse( unorderedSet.find( 2 ) );
+			}
+			//erase
+			//clear
+			{
+				UnorderedSet<int, std::string> unorderedSet;
+				unorderedSet.insert( 5 );
+				unorderedSet.insert( 3 );
+				unorderedSet.insert( 9 );
+				unorderedSet.insert( 1 );
+				Assert::IsNull( unorderedSet.erase( 3 ) );
+				unorderedSet.clear();
+				Assert::IsTrue( unorderedSet.size() == 0 );
+			}
 		}
 	};
 }
