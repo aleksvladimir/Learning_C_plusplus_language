@@ -59,7 +59,7 @@ public:
 
   [[nodiscard]] float load_factor() const
   {
-    return size_ / static_cast< float >( buckets_.size() );
+    return buckets_.empty() ? 0.0 : size_ / static_cast< float >( buckets_.size() );
   }
 
   [[nodiscard]] size_t size() const noexcept
@@ -71,6 +71,7 @@ public:
   {
     return size_ == 0;
   }
+  // O(1)
   [[nodiscard]] K* erase( const K& key )
   {
     // find bucket
@@ -92,7 +93,8 @@ public:
       return nullptr;
     return &( *it );
   }
-  K* find( const K & key )
+  // average O(1), worst O(N) in case where N is elements count of bucket's list
+  [[nodiscard]] K* find( const K & key ) const
   {
     // find bucket
     auto bucketIdx = bucket_index( key );
@@ -103,6 +105,7 @@ public:
       return nullptr;
     return &( *it );
   }
+  // O(N*M) in case where N is bucket's count and M is element's count in list
   void clear()
   {
     for (auto& listPtr : buckets_)
