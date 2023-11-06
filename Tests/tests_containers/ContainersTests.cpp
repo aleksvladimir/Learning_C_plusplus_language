@@ -7,6 +7,7 @@
 #include "../../EducationLibs/Containers/Deque.h"
 #include "../../EducationLibs/Containers/ForwardList.h"
 #include "../../EducationLibs/Containers/List.h"
+#include "../../EducationLibs/Containers/PriorityQueue.h"
 #include "../../EducationLibs/Containers/Queue.h"
 #include "../../EducationLibs/Containers/Set.h"
 #include "../../EducationLibs/Containers/Stack.h"
@@ -897,6 +898,40 @@ namespace ContainersTests
 				Assert::IsTrue( queue.back() == 1 );
 				queue.emplace( 7 );
 				Assert::IsTrue( queue.back() == 7 );
+			}
+		}
+		TEST_METHOD( Test_MyPriorityQueue )
+		{
+			// push
+			// emplace
+			// top
+			// pop
+			// empty
+			// size
+			{
+				PriorityQueue<int> priority_queue;
+				priority_queue.emplace( 5 );
+				priority_queue.push( 3 );
+				priority_queue.emplace( 2 );
+				priority_queue.push( 1 );
+				priority_queue.push( 4 );
+				priority_queue.push( 7 );
+				Assert::IsTrue( priority_queue.top() == 7 );
+				priority_queue.pop();
+				Assert::IsTrue( priority_queue.top() == 5 );
+				priority_queue.pop();
+				Assert::IsTrue( priority_queue.top() == 4 );
+				priority_queue.pop();
+				Assert::IsTrue( priority_queue.top() == 3 );
+				priority_queue.pop();
+				Assert::IsTrue( priority_queue.top() == 2 );
+				priority_queue.pop();
+				Assert::IsTrue( priority_queue.top() == 1 );
+				priority_queue.pop();
+				Assert::IsTrue( priority_queue.empty() );
+				Assert::IsTrue( priority_queue.size() == 0 );
+				priority_queue.pop();
+				Assert::IsTrue( priority_queue.empty() );
 			}
 		}
 	};

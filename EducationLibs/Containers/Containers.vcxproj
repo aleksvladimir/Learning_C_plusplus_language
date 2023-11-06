@@ -160,6 +160,7 @@
     <ClInclude Include="Deque.h" />
     <ClInclude Include="ForwardList.h" />
     <ClInclude Include="List.h" />
+    <ClInclude Include="PriorityQueue.h" />
     <ClInclude Include="Queue.h" />
     <ClInclude Include="Set.h" />
     <ClInclude Include="Stack.h" />
