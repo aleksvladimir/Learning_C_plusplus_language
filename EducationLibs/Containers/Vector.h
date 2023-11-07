@@ -10,19 +10,6 @@ class Vector
   size_t size_ = 0;     // current elements count
   size_t capacity_ = 0; // how many elements can fit
 
-  T* alloc( size_t newSize )
-  {
-    return newSize ? new T[ newSize ] : nullptr;
-  }
-  void realloc()
-  {
-    auto p = alloc( capacity_ );
-    for ( int i = 0; i < size_; ++i )
-      p[ i ] = std::forward<T>( data_[ i ] );
-    delete[] data_;
-    data_ = p;
-  }
-
 public:
 
   Vector() = default;
@@ -67,16 +54,13 @@ public:
   void pop_back()
   {
     if ( size_ != 0 )
-    {
-      data_[ size_ - 1 ].~T();
-      size_--;      
-    }
-  }
-  size_t capacity() const noexcept
+      data_[ --size_ ].~T();
+  } 
+  [[nodiscard]] size_t capacity() const noexcept
   {
     return capacity_;
   }
-  size_t size() const noexcept
+  [[nodiscard]] size_t size() const noexcept
   {
     return size_;
   }
@@ -92,7 +76,7 @@ public:
   {
     return data_[ size_ - 1 ];
   }
-  const T& back() const noexcept
+  [[nodiscard]] const T& back() const noexcept
   {
     return data_[ size_ - 1 ];
   }
@@ -141,5 +125,18 @@ public:
       while ( newSize > size_ )
         push_back( val );
     }
+  }
+private:
+  static T * alloc( size_t newSize )
+  {
+    return newSize ? new T[ newSize ] : nullptr;
+  }
+  void realloc()
+  {
+    auto p = alloc( capacity_ );
+    for ( int i = 0; i < size_; ++i )
+      p[ i ] = std::forward<T>( data_[ i ] );
+    delete[] data_;
+    data_ = p;
   }
 };

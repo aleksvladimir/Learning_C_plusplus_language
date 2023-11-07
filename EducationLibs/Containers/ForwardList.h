@@ -52,11 +52,11 @@ public:
     head_ = next;
     --size_;
   }
-  T& front()
+  [[nodiscard]] T& front()
   {
     return head_->value;
   }
-  const T& front() const
+  [[nodiscard]] const T& front() const
   {
     return head_->value;
   }
@@ -64,7 +64,7 @@ public:
   {
     return size_;
   }
-  bool empty() const noexcept
+  [[nodiscard]] bool empty() const noexcept
   {
     return size_ == 0;
   }

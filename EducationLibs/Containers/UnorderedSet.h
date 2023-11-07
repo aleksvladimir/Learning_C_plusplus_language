@@ -120,7 +120,7 @@ private:
 
   [[nodiscard]] size_t bucket_index( const K & key ) const
   {
-    return std::hash<K>{}( key ) % buckets_.size();
+    return Hash()( key ) % buckets_.size();
   }
 };
 

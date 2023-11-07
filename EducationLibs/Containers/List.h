@@ -96,7 +96,7 @@ public:
   }
   bool empty() const noexcept
   {
-    return head_ == tail_;
+    return size_ == 0;
   }
   void clear()
   {
@@ -113,6 +113,7 @@ public:
       tail_->prev = std::exchange( tail_->next, tail_->prev );
       tail_ = tail_->next;
     }
+    head_->prev = std::exchange( head_->next, head_->prev );
     head_ = oldTail;
   }
 

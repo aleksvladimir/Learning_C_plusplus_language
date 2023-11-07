@@ -19,6 +19,42 @@ using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 namespace ContainersTests
 {
+	struct Data
+	{
+		int value;
+		// need for Set
+		bool operator > ( const Data & r ) const
+		{
+			return value > r.value;
+		}
+		bool operator < ( const Data & r ) const
+		{
+			return value < r.value;
+		}
+		// need for UnorderedSet
+		struct Hash
+		{
+		  size_t operator()( const Data & data ) const
+		  {
+				return std::hash<int>{}( data.value );
+		  }
+		};
+		struct Equal
+		{
+			bool operator()( const Data & l, const Data & r ) const
+		  {
+				return l.value == r.value;
+			}
+		};
+		// need for test-case
+		friend bool operator == ( const Data & l, const Data & r );
+	};
+	bool operator == ( const Data & l, const Data & r )
+	{
+		return l.value == r.value;
+	}
+
+
 	TEST_CLASS(ContainersTests)
 	{
 	public:
@@ -446,14 +482,19 @@ namespace ContainersTests
 			// reverse
 			{
 				List<int> list;
-				list.push_back( 1 );
 				list.push_back( 2 );
-				list.push_back( 3 );
-				Assert::AreEqual( 1, ( int )list.front() );
-				Assert::AreEqual( 3, ( int )list.back() );
-				list.reverse();
-				Assert::AreEqual( 3, ( int )list.front() );
+				list.push_back( 1 );
+				Assert::AreEqual( 2, ( int )list.front() );
 				Assert::AreEqual( 1, ( int )list.back() );
+				list.reverse();
+				list.push_front( 0 );
+				list.push_back( 3 );
+				Assert::AreEqual( 0, ( int )list.front() );
+				list.pop_front();
+				Assert::AreEqual( 1, ( int )list.front() );
+				list.pop_front();
+				Assert::AreEqual( 2, ( int )list.front() );
+				Assert::AreEqual( 3, ( int )list.back() );
 			}
 			// sort
 		  {
@@ -719,7 +760,6 @@ namespace ContainersTests
 				Assert::IsTrue( vec.empty() );
 			}
 		}
-
 		TEST_METHOD( Test_MySet )
 		{
 			// insert
@@ -776,6 +816,23 @@ namespace ContainersTests
 				Assert::IsTrue( isErase );
 				Assert::IsTrue( it->right->right->data == 57 );
 			}
+			// T.operator >, <, ==, !=
+			{
+				Set<Data> dataContainer;
+				dataContainer.insert( Data{ 20 } );
+				dataContainer.insert( Data{ 50 } );
+				dataContainer.insert( Data{ 60 } );
+				dataContainer.insert( Data{ 55 } );
+				dataContainer.insert( Data{ 57 } );
+				auto isErase = static_cast< bool >( dataContainer.erase( Data{ 50 } ) );
+				Assert::IsTrue( isErase );
+				auto it = dataContainer.find( Data{ 20 }  );
+				Assert::IsTrue( it->right->right->left->data == Data{ 57 } );
+
+				isErase = static_cast< bool >( dataContainer.erase( Data{ 60 } ) );
+				Assert::IsTrue( isErase );
+				Assert::IsTrue( it->right->right->data == Data{ 57 } );
+			}
 		}
 
 		TEST_METHOD( Test_MyUnorderedSet )
@@ -784,7 +841,7 @@ namespace ContainersTests
 			//size
 			//empty
 		  {
-		    UnorderedSet<int, std::string> unorderedSet;
+		    UnorderedSet<int> unorderedSet;
 		    Assert::IsTrue( unorderedSet.size() == 0 );
 		    Assert::IsTrue( unorderedSet.empty() );
 		    unorderedSet.insert( 5 );
@@ -798,13 +855,26 @@ namespace ContainersTests
 			//find
 			//clear
 			{
-				UnorderedSet<int, std::string> unorderedSet;
+				UnorderedSet<int> unorderedSet;
 				unorderedSet.insert( 5 );
 				unorderedSet.insert( 3 );
 				unorderedSet.insert( 9 );
 				unorderedSet.insert( 1 );
         const auto ptr = unorderedSet.erase( 3 );
 				const auto ptr2 = unorderedSet.find( 3 );
+				Assert::IsTrue( ptr == nullptr && ptr2 == nullptr );
+				unorderedSet.clear();
+				Assert::IsTrue( unorderedSet.size() == 0 );
+			}
+			//T.Hash, T.operator==
+			{
+				UnorderedSet<Data, Data::Hash, Data::Equal> unorderedSet;
+				unorderedSet.insert( Data{ 5 } );
+				unorderedSet.insert( Data{ 3 } );
+				unorderedSet.insert( Data{ 9 } );
+				unorderedSet.insert( Data{ 1 } );
+				const auto ptr = unorderedSet.erase( Data{ 3 }  );
+				const auto ptr2 = unorderedSet.find( Data{ 3 }  );
 				Assert::IsTrue( ptr == nullptr && ptr2 == nullptr );
 				unorderedSet.clear();
 				Assert::IsTrue( unorderedSet.size() == 0 );
@@ -817,6 +887,7 @@ namespace ContainersTests
 			//
 			//insert
 			//find
+			//erase
 			{
 				HashTableWithOpenAddressing<int, std::string> unorderedSet;
 				unorderedSet.insert( { 5, "" }  );
@@ -825,18 +896,10 @@ namespace ContainersTests
 				unorderedSet.insert( { 1, "" }  );
 				Assert::IsTrue( unorderedSet.find( 3 ) );
 				Assert::IsFalse( unorderedSet.find( 2 ) );
-			}
-			//erase
-			//clear
-			{
-				UnorderedSet<int, std::string> unorderedSet;
-				unorderedSet.insert( 5 );
-				unorderedSet.insert( 3 );
-				unorderedSet.insert( 9 );
-				unorderedSet.insert( 1 );
-				Assert::IsNull( unorderedSet.erase( 3 ) );
-				unorderedSet.clear();
-				Assert::IsTrue( unorderedSet.size() == 0 );
+				unorderedSet.erase( 3 );
+				unorderedSet.erase( 1 );
+				unorderedSet.erase( 9 );
+				unorderedSet.erase( 5 );
 			}
 		}
 
