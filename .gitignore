@@ -24,3 +24,5 @@
 *.filters
 /EducationLibs/Containers/Debug
 /Tests/tests_containers/Debug
+/EducationLibs/Templates/Templates/Debug
+/Tests/tests_templates/tests_templates/Debug
