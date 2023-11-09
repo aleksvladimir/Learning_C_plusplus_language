@@ -2,27 +2,38 @@ Brief information about algorithms and data structures.
 
 ## Data structures
 
-| Name structure     | Indexation  | Search         | Inserting    | Deleting    | Memory |
-|:------------------:|:-----------:|:--------------:|:------------:|:-----------:|:------:|
-| Binary Heap        | -           | -              | O(log(n))    | O(log(n))   | O(n)   |
-| Binary Tree        | O(log(n))   | O(log(n))      | O(log(n))    | O(log(n))   | O(n)   |
-| LinkedList         | O(n)        | O(n)           | O(1)         | O(1)        | O(n)   |
-| Queue              | -           | -              | O(1)         | O(1)        | O(n)   |
-| Stack              | -           | -              | O(1)         | O(1)        | O(n)   |
+| Name structure     | Indexation  | Search         | Inserting       | Deleting    | Memory |
+|:------------------:|:-----------:|:--------------:|:---------------:|:-----------:|:------:|
+| Binary Heap        | -           | -              | O(log(n))       | O(log(n))   | O(n)   |
+| Binary Tree        | O(log(n))   | O(log(n))      | O(log(n))       | O(log(n))   | O(n)   |
+| LinkedList         | O(n)        | O(n)           | O(1)            | O(1)        | O(n)   |
+| Hash Table         | O(1)        | O(1)           | O(1)            | O(1)        | O(n)   |
+| Queue              | -           | -              | O(1)            | O(1)        | O(n)   |
+| Stack              | -           | -              | O(1)            | O(1)        | O(n)   |
 
-## Allocators
+## STL containers
 
-| Name allocator                           | Allocation | Free |
-|:----------------------------------------:|:----------:|:----:|
-| Linear allocator                         | O(1)       | -    |
-| Pool allocator                           | O(1)       | O(1) |
+| Name STL container | Indexation  | Search         | Inserting       | Deleting    | Memory | Iterator invalidation | Iterator category |
+|:------------------:|:-----------:|:--------------:|:---------------:|:-----------:|:------:|:---------------------:|:------------------|
+| array              | O(1)        | -              | -               | -           | O(n)   |           +           |         RA        |
+| vector             | O(1)        | -              | O(1) back       | O(n)        | O(n)   |           +           |         RA        |
+| list               | O(n)        | O(n)           | O(1)            | O(1)        | O(n)   |           -           |         BD        |
+| forward_list       | O(n)        | O(n)           | O(1) front      | O(1) front  | O(n)   |           -           |         F         |
+| deque              | O(1)        | O(1)           | O(1) back,front | O(1)        | O(n)   |           +           |         RA        |
+| unordered_set      | O(1)        | O(1)           | O(1)            | O(1)        | O(n)   |           +           |         F         |
+| unordered_map      | O(1)        | O(1)           | O(1)            | O(1)        | O(n)   |           +           |         F         |
+| unordered_multiset | O(1)        | O(1)           | O(1)            | O(1)        | O(n)   |           -           |         F         |
+| unordered_multimap | O(1)        | O(1)           | O(1)            | O(1)        | O(n)   |           -           |         F         |
+| set                | O(log(n))   | O(log(n))      | O(log(n))       | O(log(n))   | O(n)   |           -           |         BD        |
+| map                | O(log(n))   | O(log(n))      | O(log(n))       | O(log(n))   | O(n)   |           -           |         BD        |
+| multiset           | O(log(n))   | O(log(n))      | O(log(n))       | O(log(n))   | O(n)   |           -           |         BD        |
+| multimap           | O(log(n))   | O(log(n))      | O(log(n))       | O(log(n))   | O(n)   |           -           |         BD        |
 
-## Multithreading
-
-| Name algorithm                           |
-|:----------------------------------------:|
-| Ping Pong                                |
-| Producer and consumer                    |
+| Name STL adapter   | Indexation  | Search         | Inserting       | Deleting    | Memory |
+|:------------------:|:-----------:|:--------------:|:---------------:|:-----------:|:------:|
+| queue              | -           | -              | O(1)            | O(1)        | O(n)   |
+| stack              | -           | -              | O(1)            | O(1)        | O(n)   |
+| priority_queue     | -           | -              | O(log(n))       | O(log(n))   | O(n)   |
 
 ## Search
 
