@@ -29,6 +29,8 @@ Brief information about algorithms and data structures.
 | multiset           | O(log(n))   | O(log(n))      | O(log(n))       | O(log(n))   | O(n)   |           -           |         BD        |
 | multimap           | O(log(n))   | O(log(n))      | O(log(n))       | O(log(n))   | O(n)   |           -           |         BD        |
 
+## STL adapters
+
 | Name STL adapter   | Indexation  | Search         | Inserting       | Deleting    | Memory |
 |:------------------:|:-----------:|:--------------:|:---------------:|:-----------:|:------:|
 | queue              | -           | -              | O(1)            | O(1)        | O(n)   |
