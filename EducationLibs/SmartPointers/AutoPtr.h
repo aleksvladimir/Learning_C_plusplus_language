@@ -30,3 +30,10 @@ public:
     myPtr_ = ptr;
   }
 };
+
+// protect from UB
+template<>
+class AutoPtr<void>
+{
+  AutoPtr() = delete;
+};

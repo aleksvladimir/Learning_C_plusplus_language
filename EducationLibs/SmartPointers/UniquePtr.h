@@ -35,3 +35,10 @@ public:
     myPtr_ = ptr;
   }
 };
+
+// protect from UB
+template<>
+class UniquePtr<void>
+{
+  UniquePtr() = delete;
+};

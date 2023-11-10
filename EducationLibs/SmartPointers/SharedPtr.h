@@ -94,3 +94,10 @@ public:
     return rep_use_ ? *rep_use_ : 0;
   }
 };
+
+// protect from UB
+template<>
+class SharedPtr<void>
+{
+  SharedPtr() = delete;
+};

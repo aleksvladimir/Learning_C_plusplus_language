@@ -133,7 +133,11 @@ namespace SmartPointerTests
 		    Assert::IsNull( resetObj.get() );
 		    Assert::AreNotEqual( 4, *p );
 		  }
-
+			// protect from UB - new void
+			{
+				//AutoPtr<void> a_ptr( ( void * )new int );	// error compile!!! prohibition of instantiation
+				//Assert::IsNotNull( a_ptr.get() );
+			}
 			Assert::IsTrue( allocCounter == 0 );
 		}
 
@@ -241,7 +245,11 @@ namespace SmartPointerTests
 		    Assert::IsNull( resetObj.get() );
 		    Assert::AreNotEqual( 4, *p );
 		  }
-
+			// protect from UB - new void
+			{
+				//UniquePtr<void> a_ptr( ( void * )new int );	// error compile!!! prohibition of instantiation
+				//Assert::IsNotNull( a_ptr.get() );
+			}
 			Assert::IsTrue( allocCounter == 0 );
 		}
 
@@ -483,6 +491,11 @@ namespace SmartPointerTests
 			  Assert::IsNull( a_ptr0.get() );
 			  Assert::AreEqual( 0, static_cast< int >( a_ptr0.use_count() ) );
 		  }
+			// protect from UB - new void
+			{
+			  //SharedPtr<void> a_ptr( ( void * )new int );	// error compile!!! prohibition of instantiation
+			  //Assert::IsNotNull( a_ptr.get() );
+			}
 
 			Assert::IsTrue( allocCounter == 0 );
 		}
