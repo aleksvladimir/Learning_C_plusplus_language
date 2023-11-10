@@ -1,12 +1,12 @@
 #pragma once
 #include "BaseStrongPtr.h"
 
-template<class T>
-class AutoPtr : public BaseStrongPtr<T>
+template<typename T, typename D = DefDeleter<T> >
+class AutoPtr : public BaseStrongPtr<T, D>
 {
 public:
 
-  explicit AutoPtr( T* ptr = nullptr ) noexcept : BaseStrongPtr( ptr ) {}
+  explicit AutoPtr( typename BaseStrongPtr<T>::value_type_t * ptr = nullptr ) noexcept : BaseStrongPtr( ptr ) {}
   AutoPtr( AutoPtr& other ) noexcept : BaseStrongPtr( other.release() ) {}
   AutoPtr& operator = ( AutoPtr& other ) noexcept
   {
@@ -15,19 +15,19 @@ public:
   }
   ~AutoPtr()
   {
-    delete myPtr_;
+    this->m_deleter( this->myPtr_ );
   }
-  T* release() noexcept
+  typename BaseStrongPtr<T>::value_type_t * release() noexcept
   {
-    auto tmp = myPtr_;
-    myPtr_ = nullptr;
+    auto tmp = this->myPtr_;
+    this->myPtr_ = nullptr;
     return tmp;
   }
-  void reset( T* ptr = nullptr ) noexcept
+  void reset( typename BaseStrongPtr<T>::value_type_t * ptr = nullptr ) noexcept
   {
-    if ( ptr != myPtr_ )
-      delete myPtr_;
-    myPtr_ = ptr;
+    if ( ptr != this->myPtr_ )
+      this->m_deleter( this->myPtr_ );
+    this->myPtr_ = ptr;
   }
 };
 

@@ -2,15 +2,15 @@
 #include "BaseStrongPtr.h"
 #include "HelperClass\Uncopyable.h"
 
-template<class T>
-class UniquePtr : public BaseStrongPtr<T>, Uncopyable
+template<typename T, typename D = DefDeleter<T> >
+class UniquePtr : public BaseStrongPtr<T,D>, Uncopyable
 {
 public:
 
-  explicit UniquePtr( T * ptr = nullptr ) : BaseStrongPtr( ptr ) {}
-  UniquePtr( UniquePtr && ptr )
+  explicit UniquePtr( typename BaseStrongPtr<T>::value_type_t * ptr = nullptr ) noexcept : BaseStrongPtr( ptr ) {}
+  UniquePtr( UniquePtr && ptr ) noexcept
   {
-    myPtr_ = ptr.release();
+    this->myPtr_ = ptr.release();
   }
   UniquePtr & operator = ( UniquePtr && ptr )
   {
@@ -19,20 +19,20 @@ public:
   }
   ~UniquePtr()
   {
-    delete myPtr_;
+    this->m_deleter( this->myPtr_ );
   }
 
-  T * release()
+  typename BaseStrongPtr<T>::value_type_t * release() noexcept
   {
-    auto tmp = myPtr_;
-    myPtr_ = nullptr;
+    auto tmp = this->myPtr_;
+    this->myPtr_ = nullptr;
     return tmp;
   }
-  void reset( T * ptr = nullptr )
+  void reset( typename BaseStrongPtr<T>::value_type_t * ptr = nullptr )
   {
-    if ( ptr != myPtr_ )
-      delete myPtr_;
-    myPtr_ = ptr;
+    if ( ptr != this->myPtr_ )
+      this->m_deleter( this->myPtr_ );
+    this->myPtr_ = ptr;
   }
 };
 

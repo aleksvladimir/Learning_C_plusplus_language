@@ -2,15 +2,15 @@
 #include "BaseStrongPtr.h"
 
 // Simple implementation of SharedPtr
-template<class T>
-class SharedPtr : public BaseStrongPtr<T>
+template<typename T, typename D = DefDeleter<T> >
+class SharedPtr : public BaseStrongPtr<T,D>
 {
   int* rep_use_ = nullptr;
 
 public:
 
   // default_ctr
-  SharedPtr( T* ptr = nullptr ) : BaseStrongPtr( ptr )
+  SharedPtr( typename BaseStrongPtr<T>::value_type_t* ptr = nullptr ) : BaseStrongPtr( ptr )
   {
     rep_use_ = new int( 0 );
     if ( ptr )
@@ -28,20 +28,20 @@ public:
   // copy_operator
   SharedPtr & operator = ( SharedPtr & right )
   {
-    bool isOwner = myPtr_ == right.myPtr_;
+    const bool isOwner = this->myPtr_ == right.myPtr_;
     if ( !isOwner )
       ( *this ).~SharedPtr(); // clear self memory with check rep_use
 
-    myPtr_ = right.myPtr_;
+    this->myPtr_ = right.myPtr_;
     ++( *right.rep_use_ );
     rep_use_ = right.rep_use_;
     return *this;
   }
 
   // move_ctr
-  SharedPtr( SharedPtr && right )
+  SharedPtr( SharedPtr && right ) noexcept
   {
-    myPtr_ = right.myPtr_;
+    this->myPtr_ = right.myPtr_;
     rep_use_ = right.rep_use_;
     right.myPtr_ = nullptr;
     right.rep_use_ = nullptr;
@@ -53,11 +53,11 @@ public:
     // TODO: SharedPtr( std::move( right ) ).swap( *this );
     // TODO: void swap( SharedPtr &  )
 
-    bool isOwner = myPtr_ == right.myPtr_;
+    bool isOwner = this->myPtr_ == right.myPtr_;
     if ( !isOwner )
       ( *this ).~SharedPtr(); // clear self memory with check rep_use
     
-    myPtr_ = right.myPtr_;
+    this->myPtr_ = right.myPtr_;
     rep_use_ = right.rep_use_;
     right.myPtr_ = nullptr;
     right.rep_use_ = nullptr;
@@ -73,10 +73,10 @@ public:
          ( *rep_use_ == 0 ||
          --( *rep_use_ ) == 0 ) )
     {
-      delete rep_use_;
+      this->m_deleter( rep_use_ );
       rep_use_ = nullptr;
-      delete myPtr_;
-      myPtr_ = nullptr;
+      this->m_deleter( this->myPtr_ );
+      this->myPtr_ = nullptr;
     }
   }
 
@@ -85,11 +85,11 @@ public:
   {
     ( *this ).~SharedPtr();
     rep_use_ = nullptr;
-    myPtr_ = nullptr;
+    this->myPtr_ = nullptr;
   }
 
   // strong ref count (use)
-  long use_count() const
+  [[nodiscard]] long use_count() const
   {
     return rep_use_ ? *rep_use_ : 0;
   }

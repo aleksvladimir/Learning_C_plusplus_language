@@ -138,6 +138,12 @@ namespace SmartPointerTests
 				//AutoPtr<void> a_ptr( ( void * )new int );	// error compile!!! prohibition of instantiation
 				//Assert::IsNotNull( a_ptr.get() );
 			}
+			// protect from UB - new int[]
+			// deleter
+			{
+				AutoPtr<int[]> a_ptr( new int[ 100 ] );
+				Assert::IsNotNull( a_ptr.get() );
+			}
 			Assert::IsTrue( allocCounter == 0 );
 		}
 
@@ -249,6 +255,12 @@ namespace SmartPointerTests
 			{
 				//UniquePtr<void> a_ptr( ( void * )new int );	// error compile!!! prohibition of instantiation
 				//Assert::IsNotNull( a_ptr.get() );
+			}
+			// protect from UB - new int[]
+			// deleter
+			{
+				UniquePtr<int[]> a_ptr( new int[ 100 ] );
+				Assert::IsNotNull( a_ptr.get() );
 			}
 			Assert::IsTrue( allocCounter == 0 );
 		}
@@ -495,6 +507,12 @@ namespace SmartPointerTests
 			{
 			  //SharedPtr<void> a_ptr( ( void * )new int );	// error compile!!! prohibition of instantiation
 			  //Assert::IsNotNull( a_ptr.get() );
+			}
+			// protect from UB - new int[]
+			// deleter
+			{
+				SharedPtr<int[]> a_ptr( new int[100] );
+				Assert::IsNotNull( a_ptr.get() );
 			}
 
 			Assert::IsTrue( allocCounter == 0 );
