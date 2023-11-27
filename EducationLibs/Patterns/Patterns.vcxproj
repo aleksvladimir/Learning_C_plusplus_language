@@ -156,6 +156,9 @@
   <ItemGroup>
     <ClCompile Include="Singleton.h" />
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="ThreadPool_Requests.h" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

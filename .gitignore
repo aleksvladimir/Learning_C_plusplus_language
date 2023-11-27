@@ -61,3 +61,6 @@
 /Tests/tests_smart_pointers/Release
 /Tests/tests_templates/tests_templates/Release
 /Tests/tests_templates/tests_templates/x64/Debug
+/EducationLibs/Patterns/Debug
+/Tests/tests_patterns/Debug/tests_patterns.tlog
+/Tests/tests_patterns/Debug
