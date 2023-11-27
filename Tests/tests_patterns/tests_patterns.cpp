@@ -1,4 +1,4 @@
-#include "../../../EducationLibs/Templates/Templates/Singleton.h"
+#include "../../EducationLibs/Patterns/Singleton.h"
 #include "CppUnitTest.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;

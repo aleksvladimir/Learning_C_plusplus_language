@@ -21,9 +21,9 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Containers", "EducationLibs
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "test_containers", "Tests\tests_containers\test_containers.vcxproj", "{7300B415-A056-49C9-AADA-1B2C2B8A0256}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Templates", "EducationLibs\Templates\Templates\Templates.vcxproj", "{CDB86D60-DDBF-497D-89C1-23D90F026032}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Patterns", "EducationLibs\Patterns\Patterns.vcxproj", "{CDB86D60-DDBF-497D-89C1-23D90F026032}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "tests_templates", "Tests\tests_templates\tests_templates\tests_templates.vcxproj", "{EF130D38-7E83-431A-AACF-E2EE85D965A8}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "tests_patterns", "Tests\tests_patterns\tests_patterns.vcxproj", "{EF130D38-7E83-431A-AACF-E2EE85D965A8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
