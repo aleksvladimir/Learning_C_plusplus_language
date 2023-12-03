@@ -39,8 +39,7 @@ public:
   }
   ~Vector()
   {
-    delete[] data_;
-    data_ = nullptr;
+    dealloc();
     size_ = 0;
     capacity_ = 0;
   }
@@ -52,8 +51,10 @@ public:
 
   Vector& operator = ( const Vector& other )
   {
-    resize( other.size_ );
+    delete[] data_;
+    data_ = alloc( capacity_ = other.capacity_ );
     std::copy( other.data_, other.data_ + other.size_, data_ );
+    size_ = other.size_;
     return *this;
   }
   
@@ -166,6 +167,11 @@ private:
   static T * alloc( size_t newSize )
   {
     return newSize ? new T[ newSize ] : nullptr;
+  }
+  void dealloc()
+  {
+    delete[] data_;
+    data_ = nullptr;
   }
   void realloc()
   {
