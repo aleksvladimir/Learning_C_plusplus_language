@@ -61,6 +61,19 @@ namespace ContainersTests
 		
 		TEST_METHOD( Test_std_vector )
 		{
+			// default_ctr
+			// copy_ctr
+			// move_ctr
+			{
+				std::vector<int> vec1{ 2, 1, 1 };
+				std::vector<int> vec11( vec1 );
+				Assert::IsTrue( vec1 == vec11 );
+
+				std::vector<int> vec2( 3, 2 );
+				std::vector<int> vec21( std::move( vec1 ) );
+				Assert::IsTrue( vec21 == std::vector<int>{ 3, 2, 2 } );
+			}
+
 			// push_back
 			// capacity
 			// size
@@ -258,6 +271,28 @@ namespace ContainersTests
 
 		TEST_METHOD( Test_MyVector)
 		{
+			// destructor
+			{
+				Vector<int> vec( 3, 4 );
+				vec.~Vector();
+				Assert::IsTrue( vec.capacity() == 0 );
+				Assert::IsTrue( vec.empty() );
+				Assert::IsTrue( vec.data() == nullptr );
+			}
+
+			// default_ctr
+			// copy_ctr
+			// move_ctr
+			{
+				Vector<int> vec1{ 2, 1, 1 };
+				Vector<int> vec11( vec1 );
+				Assert::IsTrue( vec1 == vec11 );
+
+				Vector<int> vec2( 3, 2 );
+				Vector<int> vec21( std::move( vec2 ) );
+				Assert::IsTrue( vec21 == Vector<int>( 3, 2 ) );
+			}
+
 			// default_ctr
 			// push_back
 			// capacity
@@ -424,12 +459,6 @@ namespace ContainersTests
 				Assert::AreEqual( 2, ( int )vec.back() );
 			}
 
-			// destructor
-			{
-				Vector<int> vec( 3, 4 );
-				vec.~Vector();
-				Assert::IsTrue( vec.empty() );
-			}
 		}
 
 		TEST_METHOD( Test_MyList )

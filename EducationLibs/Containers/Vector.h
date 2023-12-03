@@ -16,29 +16,65 @@ public:
   Vector( size_t newSize )
   {
     data_ = alloc( capacity_ = size_ = newSize );
-    std::fill( data_, data_ + size_, 0 );     // or memcpy
+    std::fill( data_, data_ + size_, 0 );
   }
   Vector( size_t newSize, T value )
   {
     data_ = alloc( capacity_ = size_ = newSize );
-    std::fill( data_, data_ + size_, value ); // or memcpy
+    std::fill( data_, data_ + size_, value );
+  }
+  Vector( std::initializer_list<T> i_list )
+  {
+    data_ = alloc( capacity_ = size_ = i_list.size() );
+    std::copy( i_list.begin(), i_list.end(), data_ );
   }
   Vector( const Vector & other )
   {
-    //todo
+    data_ = alloc( capacity_ = size_ = other.size_ );
+    std::copy( other.data_, other.data_ + other.size_, data_ );
+  }
+  Vector( Vector && other )
+  {
+    other.swap( *this );
   }
   ~Vector()
   {
-    resize( 0 );
-    shrink_to_fit();
+    delete[] data_;
+    data_ = nullptr;
+    size_ = 0;
+    capacity_ = 0;
   }
 
-  Vector& operator = ( Vector& other )
+  bool operator == ( const Vector & other ) const
   {
-    //todo
+    return std::equal( data_, data_ + size_, other.data_, other.data_ + other.size_ );
+  }
+
+  Vector& operator = ( const Vector& other )
+  {
+    resize( other.size_ );
+    std::copy( other.data_, other.data_ + other.size_, data_ );
+    return *this;
+  }
+  
+  Vector& operator = ( Vector&& other )
+  {
+    Vector tmp_other( std::move( other ) );
+    tmp_other.swap( this );
     return *this;
   }
 
+  T* data()
+  {
+    return data_;
+  }
+
+  void swap( Vector & other ) noexcept
+  {
+    data_ = std::exchange( other.data_, data_ );
+    size_ = std::exchange( other.size_, size_ );
+    capacity_ = std::exchange( other.capacity_, capacity_ );
+  }
 
   template<class U>
   void push_back( U && elem )
