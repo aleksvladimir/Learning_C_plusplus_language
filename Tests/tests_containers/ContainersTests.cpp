@@ -70,8 +70,8 @@ namespace ContainersTests
 				Assert::IsTrue( vec1 == vec11 );
 
 				std::vector<int> vec2( 3, 2 );
-				std::vector<int> vec21( std::move( vec1 ) );
-				Assert::IsTrue( vec21 == std::vector<int>{ 3, 2, 2 } );
+				std::vector<int> vec21( std::move( vec2 ) );
+				Assert::IsTrue( vec21 == std::vector<int>{ 2, 2, 2 } );
 			}
 
 			// push_back
