@@ -32,7 +32,7 @@ public:
 
   ~ThreadPool() noexcept
   {
-    quite = true;
+    quit = true;
     task_cv_notify.notify_all();
     for ( auto & thread : thread_list )
       if ( thread.joinable() )
@@ -47,6 +47,7 @@ public:
   {
     std::unique_lock<std::mutex> lock( task_mutex );
     task_list.emplace( std::move( task ) );
+    lock.unlock();
     task_cv_notify.notify_one();
   }
 
@@ -59,17 +60,17 @@ private:
   std::condition_variable task_cv_notify;         // notify about a new task in the task list
   std::mutex task_mutex;                          // mutex for sync task list: when producer and consumer pushing and popping a tasks
 
-  std::atomic<bool> quite = false;                // flag to end executing tasks by thread pool
+  std::atomic<bool> quit = false;                // flag to end executing tasks by thread pool
 
   void run() noexcept
   {
-    try
+    while ( !quit )
     {
-      while ( !quite )
+      try
       {
         std::unique_lock<std::mutex> u_lock( task_mutex );
-        task_cv_notify.wait( u_lock, [this]()->bool { return quite || !task_list.empty(); } ); // lock when woken up, unlock when sleep
-        if ( !task_list.empty() )
+        task_cv_notify.wait( u_lock, [this]() { return quit || !task_list.empty(); } ); // lock when woken up, unlock when sleep
+        if ( !quit && !task_list.empty() )
         {
           Task task = std::move( task_list.front() );
           task_list.pop();
@@ -77,9 +78,9 @@ private:
           task();
         }
       }
-    }
-    catch ( ... )
-    {
+      catch ( ... )
+      {
+      }
     }
   }
 };

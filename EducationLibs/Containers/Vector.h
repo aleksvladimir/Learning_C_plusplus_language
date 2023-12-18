@@ -51,10 +51,8 @@ public:
 
   Vector& operator = ( const Vector& other )
   {
-    delete[] data_;
-    data_ = alloc( capacity_ = other.capacity_ );
-    std::copy( other.data_, other.data_ + other.size_, data_ );
-    size_ = other.size_;
+    Vector tmp_other( other );
+    tmp_other.swap( this );
     return *this;
   }
   

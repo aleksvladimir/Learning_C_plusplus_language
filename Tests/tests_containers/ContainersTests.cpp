@@ -217,6 +217,12 @@ namespace ContainersTests
 				std::vector<int> vec(3);
 				Assert::AreEqual( 3, ( int )vec.size() );
 				Assert::AreEqual( 3, ( int )vec.capacity() );
+				Assert::AreEqual( 0, ( int )vec.at(0) );
+				Assert::AreEqual( 0, ( int )vec.at(1) );
+				Assert::AreEqual( 0, ( int )vec.at(2) );
+				Assert::AreEqual( 0, ( int )vec[ 0 ] );
+				Assert::AreEqual( 0, ( int )vec[ 1 ] );
+				Assert::AreEqual( 0, ( int )vec[ 2 ] );
 			}
 
 			// []
@@ -331,6 +337,10 @@ namespace ContainersTests
 				Vector<int> vec(4);
 				Assert::AreEqual( 4, ( int )vec.size() );
 				Assert::AreEqual( 4, ( int )vec.capacity() );
+				Assert::AreEqual( 0, ( int )vec.at( 0 ) );
+				Assert::AreEqual( 0, ( int )vec.at( 1 ) );
+				Assert::AreEqual( 0, ( int )vec.at( 2 ) );
+				Assert::AreEqual( 0, ( int )vec.at( 3 ) );
 			  Assert::IsTrue( !vec.empty() );
 			  vec.pop_back();
 			  Assert::AreEqual( 3, ( int )vec.size() );
