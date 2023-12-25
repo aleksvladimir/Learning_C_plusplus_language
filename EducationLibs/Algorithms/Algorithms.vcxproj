@@ -151,6 +151,9 @@
     <ClCompile Include="search.cpp" />
     <ClCompile Include="sort.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="leetcode\88.h" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
